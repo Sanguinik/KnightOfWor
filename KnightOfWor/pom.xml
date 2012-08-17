@@ -15,9 +15,7 @@
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx</artifactId>
-			<version>2.2.b0</version>
-			<scope>system</scope>
-			<systemPath>${env.JAVAFX_RT}</systemPath>
+			<version>2.2.b19</version>
 		</dependency>
 	</dependencies>
 	<build>
