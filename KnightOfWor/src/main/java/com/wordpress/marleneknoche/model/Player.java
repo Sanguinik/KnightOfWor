@@ -44,8 +44,7 @@ public class Player {
 	public void setLives(int lives){
 		this.lives=lives;
 		if(lives>maxLives){
-			this.lives=maxLives;
-			
+			this.lives=maxLives;	
 		}
 	}
 	
