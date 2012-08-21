@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 public class TitleScreen extends Application {
 
-	private static final double BUTTON_SIZE = 100.0;
+	private static final double BUTTON_SIZE = 120.0;
 
 	public static void main(String[] args){
 		launch(args);
@@ -66,6 +66,7 @@ public class TitleScreen extends Application {
 		});
 		
 		Scene scene = new Scene(grid, 1024,768);
+		scene.getStylesheets().add(TitleScreen.class.getResource("TitleScreen.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
