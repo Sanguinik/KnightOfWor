@@ -45,6 +45,7 @@ public class Player {
 		this.lives=lives;
 		if(lives>maxLives){
 			this.lives=maxLives;
+			
 		}
 	}
 	
