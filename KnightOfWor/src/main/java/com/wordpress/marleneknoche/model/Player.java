@@ -9,6 +9,10 @@ public class Player {
 	private int lives = 4;
 	private final int maxLives = 4;
 	
+	public Player(){
+		
+	}
+	
 	public int getPoints(){
 		return points;
 	}
