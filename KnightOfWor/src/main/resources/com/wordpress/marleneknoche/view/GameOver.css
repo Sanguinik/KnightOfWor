@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+.root{
+	-fx-background-image: url("GameOver_8bit.jpg");
+}
+
+.button{
+	-fx-text-fill: white;
+	-fx-font-family: "Monospace";
+	-fx-font-weight: bold;
+	-fx-background-color: linear-gradient(black,blue );
+}
+
+.button:hover{
+	-fx-background-color: linear-gradient(grey,lightblue);
+}
