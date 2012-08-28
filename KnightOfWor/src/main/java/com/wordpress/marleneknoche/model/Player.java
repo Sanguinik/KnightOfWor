@@ -10,7 +10,7 @@ public class Player {
 	private final int maxLives = 4;
 	
 	public Player(){
-		
+		lives=4;
 	}
 	
 	public int getPoints(){
