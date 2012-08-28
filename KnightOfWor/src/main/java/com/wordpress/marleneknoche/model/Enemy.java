@@ -2,12 +2,14 @@ package com.wordpress.marleneknoche.model;
 
 public class Enemy {
 	
+	private String name;
 	private int points;
 	private Bullet bullet;
-	private Boolean alive;
+	private Boolean alive = true;
 	
-	public Enemy(){
-		
+	public Enemy(TypeOfEnemy type){
+		name = type.name();
+		points = TypeOfEnemy.getPoints(type);
 	}
 	
 	public int getPoints(){
@@ -16,6 +18,10 @@ public class Enemy {
 	
 	public void shoot(){
 		
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	public Boolean isAlive(){
@@ -29,5 +35,6 @@ public class Enemy {
 	public void move(){
 		
 	}
+
 
 }
