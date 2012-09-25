@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 .root{
-	-fx-background-image: url("titlescreenBack.jpg");
+	-fx-background-image: url("Start.png");
 }
 
 .button{

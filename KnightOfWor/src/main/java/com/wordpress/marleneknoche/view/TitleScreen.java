@@ -71,8 +71,8 @@ public class TitleScreen extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				Highscore highscoreGUI = new Highscore();
-				highscoreGUI.start(primaryStage);
+				HighscoreScreen highscoreScreen = new HighscoreScreen();
+				highscoreScreen.start(primaryStage);
 			}
 
 		});
