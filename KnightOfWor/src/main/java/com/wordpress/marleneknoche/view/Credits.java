@@ -14,26 +14,25 @@ public class Credits extends Application {
 	public void start(final Stage primaryStage) {
 		primaryStage.setTitle("Knight of Wor - Credits");
 		primaryStage.setResizable(false);
-		
+
 		Button okBtn = new Button();
 		okBtn.setText("Zurück");
-		okBtn.setOnAction(new EventHandler<ActionEvent>(){
+		okBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
 				TitleScreen title = new TitleScreen();
 				title.start(primaryStage);
 			}
-			
+
 		});
-		
+
 		StackPane root = new StackPane();
 		root.getChildren().add(okBtn);
-		Scene scene = new Scene(root, 1024, 768);
+		Scene scene = new Scene(root, 1024, 740);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
-	}
 
+	}
 
 }

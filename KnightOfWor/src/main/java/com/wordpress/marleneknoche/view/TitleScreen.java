@@ -42,8 +42,12 @@ public class TitleScreen extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				GameOver gameOver = new GameOver();
-				gameOver.start(primaryStage);
+				PlayFieldScreen psc = new PlayFieldScreen();
+				try {
+					psc.start(primaryStage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 		});
@@ -102,7 +106,7 @@ public class TitleScreen extends Application {
 			}
 		});
 
-		Scene scene = new Scene(grid, 1024, 768);
+		Scene scene = new Scene(grid, 1024, 740);
 		scene.getStylesheets().add(
 				TitleScreen.class.getResource("TitleScreen.css")
 						.toExternalForm());

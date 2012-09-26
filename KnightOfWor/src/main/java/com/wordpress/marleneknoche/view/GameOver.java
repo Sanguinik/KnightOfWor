@@ -30,7 +30,7 @@ public class GameOver extends Application {
 
 		StackPane root = new StackPane();
 		root.getChildren().add(button);
-		Scene scene = new Scene(root, 1024, 768);
+		Scene scene = new Scene(root, 1024, 740);
 		scene.getStylesheets().add(
 				GameOver.class.getResource("GameOver.css").toExternalForm());
 		primaryStage.setScene(scene);

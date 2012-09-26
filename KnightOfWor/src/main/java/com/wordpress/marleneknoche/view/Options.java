@@ -29,7 +29,7 @@ public class Options extends Application {
 
 		StackPane root = new StackPane();
 		root.getChildren().add(okBtn);
-		Scene scene = new Scene(root, 1024, 768);
+		Scene scene = new Scene(root, 1024, 740);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
