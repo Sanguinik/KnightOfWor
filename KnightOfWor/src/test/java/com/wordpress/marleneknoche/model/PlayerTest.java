@@ -1,17 +1,19 @@
 package com.wordpress.marleneknoche.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerTest {
-	
+
 	private Player player;
-	
+	private Maze maze;
+
 	@Before
 	public void setUp() throws Exception {
-		player = new Player();
+		player = new Player(maze);
 	}
 
 	@Test
@@ -21,15 +23,15 @@ public class PlayerTest {
 		assertEquals("Player 1000 Points!", 1000, player.getPoints());
 		assertTrue("Am Anfang lebendig!", player.isAlive());
 	}
-	
+
 	@Test
-	public void testLives(){
+	public void testLives() {
 		player.setLives(5);
-		assertTrue(player.getLives()==player.getMaxLives());
+		assertTrue(player.getLives() == player.getMaxLives());
 		player.setLives(4);
-		assertTrue(player.getLives()==4);
+		assertTrue(player.getLives() == 4);
 		player.setLives(3);
-		assertTrue(player.getLives()==3);
+		assertTrue(player.getLives() == 3);
 	}
 
 }

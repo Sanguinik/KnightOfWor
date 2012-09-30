@@ -4,12 +4,14 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import com.wordpress.marleneknoche.model.Keyboard;
+import com.wordpress.marleneknoche.model.Maze;
+import com.wordpress.marleneknoche.model.Player;
 
 public class PlayFieldScreen extends Application {
 
@@ -19,14 +21,17 @@ public class PlayFieldScreen extends Application {
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
-		final Rectangle rect = new Rectangle(0, 0, 100, 100);
-		rect.setFill(Color.BLUE);
-		root.getChildren().add(rect);
+		Maze maze = new Maze();
+		Player player = new Player(maze);
+		Keyboard keyboard = new Keyboard(player);
+
+		root.getChildren().add(player.getPlayerRectangle());
 
 		Rectangle exit = new Rectangle(400, 300, 100, 100);
 		exit.setFill(Color.ROSYBROWN);
 
 		root.getChildren().add(exit);
+		root.getChildren().addAll(maze.getWalls());
 
 		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -40,27 +45,7 @@ public class PlayFieldScreen extends Application {
 		});
 
 		Scene scene = new Scene(root, 1024, 740);
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode() == KeyCode.D && rect.getX() < 924) {
-					rect.setX(rect.getX() + 5);
-				} else {
-					if (ke.getCode() == KeyCode.S && rect.getY() < 640) {
-						rect.setY(rect.getY() + 5);
-					} else {
-						if (ke.getCode() == KeyCode.W && rect.getY() != 0) {
-							rect.setY(rect.getY() - 5);
-						} else {
-							if (ke.getCode() == KeyCode.A && rect.getX() != 0) {
-								rect.setX(rect.getX() - 5);
-							}
-						}
-					}
-
-				}
-			}
-		});
+		scene.setOnKeyPressed(keyboard);
 
 		scene.setFill(Color.BLACK);
 		primaryStage.setScene(scene);
