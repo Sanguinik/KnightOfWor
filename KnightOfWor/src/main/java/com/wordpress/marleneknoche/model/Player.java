@@ -16,7 +16,7 @@ public class Player {
 	private static final double DISTANCE = 5;
 
 	public Player(Maze maze) {
-		playerRectangle = new Rectangle(0, 0, 100, 100);
+		playerRectangle = new Rectangle(130, 510, 40, 40);
 		playerRectangle.setFill(Color.ORANGE);
 		this.maze = maze;
 		lives = 4;
@@ -67,9 +67,9 @@ public class Player {
 		for (Rectangle r : maze.getWalls()) {
 			if (cd.isCollide(playerRectangle, r)) {
 				if (distance > 0) {
-					playerRectangle.setX(x - DISTANCE);
+					playerRectangle.setX(x - 1);
 				} else {
-					playerRectangle.setX(x + DISTANCE);
+					playerRectangle.setX(x + 1);
 				}
 				return;
 			} else {

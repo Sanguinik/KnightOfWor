@@ -24,13 +24,12 @@ public class PlayFieldScreen extends Application {
 		Maze maze = new Maze();
 		Player player = new Player(maze);
 		Keyboard keyboard = new Keyboard(player);
-
-		root.getChildren().add(player.getPlayerRectangle());
-
 		Rectangle exit = new Rectangle(400, 300, 100, 100);
 		exit.setFill(Color.ROSYBROWN);
 
 		root.getChildren().add(exit);
+		root.getChildren().add(player.getPlayerRectangle());
+
 		root.getChildren().addAll(maze.getWalls());
 
 		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
