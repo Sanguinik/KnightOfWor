@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import com.wordpress.marleneknoche.model.Keyboard;
 import com.wordpress.marleneknoche.model.Maze;
 import com.wordpress.marleneknoche.model.Player;
+import com.wordpress.marleneknoche.model.Enemy;
+import com.wordpress.marleneknoche.model.TypeOfEnemy;
 
 public class PlayFieldScreen extends Application {
 
@@ -23,13 +25,14 @@ public class PlayFieldScreen extends Application {
 
 		Maze maze = new Maze();
 		Player player = new Player(maze);
+		Enemy enemy = new Enemy(TypeOfEnemy.BURWOR, maze);
 		Keyboard keyboard = new Keyboard(player);
 		Rectangle exit = new Rectangle(400, 300, 100, 100);
 		exit.setFill(Color.ROSYBROWN);
 
 		root.getChildren().add(exit);
 		root.getChildren().add(player.getPlayerRectangle());
-
+		root.getChildren().add(enemy.getEnemyRectangle());
 		root.getChildren().addAll(maze.getWalls());
 
 		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -42,13 +45,17 @@ public class PlayFieldScreen extends Application {
 			}
 
 		});
-
+		
+	
 		Scene scene = new Scene(root, 1024, 740);
 		scene.setOnKeyPressed(keyboard);
+	
 
 		scene.setFill(Color.BLACK);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		
 
 	}
 }

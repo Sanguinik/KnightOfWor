@@ -8,6 +8,7 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
 	private final Player player;
 
+
 	public Keyboard(Player player) {
 		this.player = player;
 	}
@@ -33,6 +34,8 @@ public class Keyboard implements EventHandler<KeyEvent> {
 		case SPACE:
 			player.shoot();
 			break;
+	
+		
 		}
 
 	}
