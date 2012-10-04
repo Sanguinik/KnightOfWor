@@ -1,5 +1,6 @@
 package com.wordpress.marleneknoche.model;
 
+import javafx.beans.value.WritableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -113,6 +114,7 @@ public class Enemy {
 	public Rectangle getEnemyRectangle() {
 		return enemyRectangle;
 	}
+
 
 
 }

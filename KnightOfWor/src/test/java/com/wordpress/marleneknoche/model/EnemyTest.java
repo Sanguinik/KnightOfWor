@@ -10,9 +10,9 @@ public class EnemyTest {
 	
 	@Test
 	public void testEnemy() {
-		enemy = new Enemy(TypeOfEnemy.BURWOR);
+		enemy = new Enemy(TypeOfEnemy.BURWOR, null);
 		assertEquals(100, enemy.getPoints());
-		enemy = new Enemy(TypeOfEnemy.WIZARD);
+		enemy = new Enemy(TypeOfEnemy.WIZARD, null);
 		assertEquals(2500,enemy.getPoints());
 		
 	}
