@@ -1,5 +1,9 @@
 package com.wordpress.marleneknoche.view;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -28,18 +32,19 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import com.wordpress.marleneknoche.model.CollisionDetector;
+import com.wordpress.marleneknoche.model.Direction;
 import com.wordpress.marleneknoche.model.Keyboard;
 import com.wordpress.marleneknoche.model.Maze;
 import com.wordpress.marleneknoche.model.Player;
 import com.wordpress.marleneknoche.model.Enemy;
-import com.wordpress.marleneknoche.model.TypeOfEnemy;
+import com.wordpress.marleneknoche.model.TypeOfFigure;
 
 public class PlayFieldScreen extends Application {
 	
-	private Timeline moveLeft;
-	private Timeline moveUp;
-	private Timeline moveDown;
-	private Timeline moveRight;
+	public Timeline moveEnemy = new Timeline();
+	private List<Enemy> enemyList= new ArrayList<Enemy>();
+	
+	
 	
 
 	@Override
@@ -49,109 +54,53 @@ public class PlayFieldScreen extends Application {
 		primaryStage.setResizable(false);
 
 		final Maze maze = new Maze();
-		Player player = new Player(maze);
-		final Enemy enemy = new Enemy(TypeOfEnemy.BURWOR, maze);
-		final Rectangle rect = enemy.getEnemyRectangle();
+		Player player = new Player(maze, TypeOfFigure.PLAYER, 130, 510);
+		Enemy enemy1 = new Enemy(maze, TypeOfFigure.BURWOR, 130, 130);
+		Enemy enemy2 = new Enemy(maze, TypeOfFigure.GARWOR, 855, 510);
+		Enemy enemy3 = new Enemy(maze, TypeOfFigure.THORWOR, 855, 130);
+		enemyList.add(enemy1);
+		enemyList.add(enemy2);
+		enemyList.add(enemy3);
 		Keyboard keyboard = new Keyboard(player);
 		Rectangle exit = new Rectangle(400, 300, 100, 100);
 		exit.setFill(Color.ROSYBROWN);
 
 		root.getChildren().add(exit);
-		root.getChildren().add(player.getPlayerRectangle());
-		root.getChildren().add(enemy.getEnemyRectangle());
+		root.getChildren().add(player.getRectangle());
+		root.getChildren().add(enemy1.getRectangle());
+		root.getChildren().add(enemy2.getRectangle());
+		root.getChildren().add(enemy3.getRectangle());
 		root.getChildren().addAll(maze.getWalls());
 		
-		/*CollisionDetector cd = new CollisionDetector();
-		for (Rectangle r : maze.getWalls()) {
-			while (!(cd.isCollide(enemy.getEnemyRectangle(), r))){
-				final Timeline timeline = new Timeline();
-		        timeline.setCycleCount(Timeline.INDEFINITE);
-		        timeline.setAutoReverse(false);
-				final KeyValue kv = new KeyValue(enemy.getEnemyRectangle().xProperty(), 3);
-		        final KeyFrame kf = new KeyFrame(Duration.millis(2000), kv);
-		        timeline.getKeyFrames().add(kf);
-		        timeline.play();
-			}
-		}*/
-        
-		moveLeft = new Timeline();
-        moveLeft.setCycleCount(Timeline.INDEFINITE);
-        moveLeft.setAutoReverse(false);
-        
-        EventHandler<ActionEvent> onFinishedL = new EventHandler<ActionEvent>() {
-        	int x = 0; //TODO Verschiebung KeyValue-Start (Anpassen, Abhängigkeiten vom Standort)
-        	Rectangle r1 = new Rectangle(enemy.getEnemyRectangle().getX(),510, 40, 40);
-        	
-            public void handle(ActionEvent t) {
+		//moveEnemy = new Timeline();
+		moveEnemy.setCycleCount(Timeline.INDEFINITE);
+        moveEnemy.setAutoReverse(false);
+		
+		EventHandler<ActionEvent> onFinished = new EventHandler<ActionEvent>() {
+			
 
-                 enemy.getEnemyRectangle().setTranslateX(x);
-                
-               CollisionDetector cd = new CollisionDetector();
-         		for (Rectangle r : maze.getWalls()) {
-         			if ((cd.isCollide(r1, r))){
-                 
-                 x=x+10;//Zurückprallen
-                 r1.setX(r1.getX()+10);
-                 enemy.getEnemyRectangle().setX(enemy.getEnemyRectangle().getX()+10);
-                 moveLeft.stop();
-                 moveUp.play();
-                 }}
-         			x=x-1;
-         			r1.setX(r1.getX()-1);
-         			enemy.getEnemyRectangle().setX(enemy.getEnemyRectangle().getX()-1);
-         			System.out.println("enemy: "+enemy.getEnemyRectangle().getX()+" r1: "+r1.getX());
-         			
-         		
-
-
-            }
-
-        };
-        
-        KeyValue lv = new KeyValue(enemy.getEnemyRectangle().xProperty(), 844);
-        KeyFrame lf = new KeyFrame(Duration.millis(30), onFinishedL, lv);
-        moveLeft.getKeyFrames().add(lf);
-        moveLeft.play();
-        
-        
-        
-        moveUp = new Timeline();
-        moveUp.setCycleCount(Timeline.INDEFINITE);
-        moveUp.setAutoReverse(false);
-        
-        EventHandler<ActionEvent> onFinishedU = new EventHandler<ActionEvent>() {
-        	int y = 0; //TODO Verschiebung KeyValue-Start
-        	Rectangle r1 = new Rectangle(enemy.getEnemyRectangle().getX(),enemy.getEnemyRectangle().getY(), 40, 40);
-        	
-            public void handle(ActionEvent t) {
-
-                 enemy.getEnemyRectangle().setTranslateY(y);
-                
-               CollisionDetector cd = new CollisionDetector();
-         		for (Rectangle r : maze.getWalls()) {
-         			if ((cd.isCollide(r1, r))){
-                 
-                 y=y+10;//Zurückprallen
-                 r1.setY(r1.getY()+10);
-                 enemy.getEnemyRectangle().setY(enemy.getEnemyRectangle().getY()+10);
-                 //moveUp.stop();
-                 }}
-         			y=y-1;
-         			r1.setY(r1.getY()-1);
-         			enemy.getEnemyRectangle().setY(enemy.getEnemyRectangle().getY()-1);
-         			
-         		
-
-
-            }
-
-        };
-        
-        KeyValue uv = new KeyValue(enemy.getEnemyRectangle().yProperty(), 509);
-        KeyFrame uf = new KeyFrame(Duration.millis(30), onFinishedU, uv);
-        moveUp.getKeyFrames().add(uf);
-        
-        
+			@Override
+			public void handle(ActionEvent t) {
+				for(Enemy e: enemyList){
+				if(e.move()== true){
+					Random generator = new Random();
+					while(e.move()== true){
+					e.changeDirection(Direction.intToDirection(generator.nextInt(4)));
+					e.move();
+					}
+				
+				}
+				
+				e.move();
+				
+			}}
+			
+		};
+		
+		KeyFrame keyframe = new KeyFrame(Duration.millis(30), onFinished);
+		moveEnemy.getKeyFrames().add(keyframe);
+		moveEnemy.play();
+		
 		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override

@@ -4,6 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import com.wordpress.marleneknoche.view.PlayFieldScreen;;
+
 public class Keyboard implements EventHandler<KeyEvent> {
 
 	private final Player player;
@@ -20,20 +22,26 @@ public class Keyboard implements EventHandler<KeyEvent> {
 		switch (code) {
 
 		case W:
-			player.moveUp();
+			player.changeDirection(Direction.UP);
+			player.move();
 			break;
 		case S:
-			player.moveDown();
+			player.changeDirection(Direction.DOWN);
+			player.move();
 			break;
 		case A:
-			player.moveLeft();
+			player.changeDirection(Direction.LEFT);
+			player.move();
 			break;
 		case D:
-			player.moveRight();
+			player.changeDirection(Direction.RIGHT);
+			player.move();
 			break;
 		case SPACE:
 			player.shoot();
 			break;
+		case P:
+			
 	
 		
 		}
