@@ -13,7 +13,7 @@ public class PlayerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		player = new Player(maze);
+		player = new Player(maze, TypeOfFigure.PLAYER, 0, 0);
 	}
 
 	@Test
