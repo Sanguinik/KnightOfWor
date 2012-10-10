@@ -4,6 +4,10 @@ import javafx.scene.shape.Rectangle;
 
 public class Figure {
 
+	private static final int HEIGHT = 40;
+
+	private static final int WIDTH = 40;
+
 	private final int points;
 	private Bullet bullet;
 	private Boolean alive = true;
@@ -18,7 +22,7 @@ public class Figure {
 
 	public Figure(Maze maze, TypeOfFigure type, int x, int y) {
 		this.setMaze(maze);
-		rectangle = new Rectangle(x, y, 40, 40);
+		rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
 		points = TypeOfFigure.getPoints(type);
 	}
 
@@ -54,7 +58,7 @@ public class Figure {
 		this.maze = maze;
 	}
 
-	public boolean move() { // returned true, falls Kollision
+	public void move() { // returned true, falls Kollision
 
 		double x = rectangle.getX();
 		double y = rectangle.getY();
@@ -62,52 +66,52 @@ public class Figure {
 		switch (direction) {
 		case UP:
 
-			return moveYDependingOnCollision(y + RECOIL, y - DISTANCE);
+			moveYDependingOnCollision(y + RECOIL, y - DISTANCE);
+			break;
 
 		case DOWN:
 
-			return moveYDependingOnCollision(y - RECOIL, y + DISTANCE);
+			moveYDependingOnCollision(y - RECOIL, y + DISTANCE);
+			break;
 
 		case LEFT:
 
-			return moveXDependingOnCollision(x + RECOIL, x - DISTANCE);
-
+			moveXDependingOnCollision(x + RECOIL, x - DISTANCE);
+			break;
 		case RIGHT:
 
-			return moveXDependingOnCollision(x - RECOIL, x + DISTANCE);
-
-		default:
-			return true;
+			moveXDependingOnCollision(x - RECOIL, x + DISTANCE);
+			break;
 
 		}
 	}
 
-	private boolean moveYDependingOnCollision(double yForCollision,
+	private void moveYDependingOnCollision(double yForCollision,
 			double yForNoCollision) {
-		for (Rectangle r : getMaze().getWalls()) {
-			if (cd.isCollide(rectangle, r)) {
-				rectangle.setY(yForCollision);
-				return true;
-			}
+
+		boolean collision = cd.isCollide(getMaze().getWalls(), rectangle);
+
+		if (collision) {
+			rectangle.setY(yForCollision);
+		} else {
+			rectangle.setY(yForNoCollision);
 		}
-		rectangle.setY(yForNoCollision);
-		return false;
 	}
 
-	private boolean moveXDependingOnCollision(double xForCollision,
+	private void moveXDependingOnCollision(double xForCollision,
 			double xForNoCollision) {
-		for (Rectangle r : getMaze().getWalls()) {
-			if (cd.isCollide(rectangle, r)) {
-				rectangle.setX(xForCollision);
-				return true;
-			}
+
+		boolean collision = cd.isCollide(getMaze().getWalls(), rectangle);
+
+		if (collision) {
+			rectangle.setX(xForCollision);
+		} else {
+			rectangle.setX(xForNoCollision);
 		}
-		rectangle.setX(xForNoCollision);
-		return false;
 
 	}
 
-	public boolean willCollideInFuture(Rectangle current, Direction direction) {
+	public boolean willCollideInFuture() {
 		Double moveX = 0.0;
 		Double moveY = 0.0;
 
@@ -129,15 +133,12 @@ public class Figure {
 			break;
 		}
 
-		Rectangle futurePosition = new Rectangle(current.getX(), current.getY());
-		futurePosition.setX(futurePosition.getX() + moveX);
-		futurePosition.setY(futurePosition.getY() + moveY);
-		for (Rectangle r : getMaze().getWalls()) {
-			if (cd.isCollide(futurePosition, r)) {
-				return true;
-			}
-		}
-		return false;
-	}
+		double futureX = rectangle.getX() + moveX;
+		double futureY = rectangle.getY() + moveY;
 
+		Rectangle futurePosition = new Rectangle(futureX, futureY, WIDTH,
+				HEIGHT);
+
+		return cd.isCollide(getMaze().getWalls(), futurePosition);
+	}
 }

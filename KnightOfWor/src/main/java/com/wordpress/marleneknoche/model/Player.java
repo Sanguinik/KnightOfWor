@@ -11,7 +11,7 @@ public class Player extends Figure {
 	public Player(Maze maze, TypeOfFigure type, int x, int y) {
 		super(maze, type, x, y);
 		getRectangle().setFill(Color.ORANGE);
-		this.setMaze(maze);
+		this.setMaze(maze); // TODO delete
 		lives = 4;
 	}
 

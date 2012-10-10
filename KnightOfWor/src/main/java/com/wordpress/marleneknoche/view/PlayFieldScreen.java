@@ -29,6 +29,8 @@ public class PlayFieldScreen extends Application {
 
 	public Timeline moveEnemy = new Timeline();
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
+	private static final int ONE_SECOND = 1000;
+	private static final int FPS = 30;
 
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
@@ -59,34 +61,29 @@ public class PlayFieldScreen extends Application {
 		moveEnemy.setCycleCount(Timeline.INDEFINITE);
 		moveEnemy.setAutoReverse(false);
 
-		EventHandler<ActionEvent> onFinished = new EventHandler<ActionEvent>() {
+		EventHandler<ActionEvent> actionPerFrame = new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent t) {
 				for (Enemy e : enemyList) {
-					if (e.move() == true) {
-						Random generator = new Random();
-						while (e.move() == true) {
-							e.setDirection(Direction
-									.intToDirection(generator.nextInt(4)));
-							if (e.willCollideInFuture(e.getRectangle(),
-									e.getDirection())) {
-								e.setDirection(Direction
-										.intToDirection(generator.nextInt(4)));
-							}
-							e.move();
-						}
+					if (e.willCollideInFuture()) {
 
+						int random = new Random().nextInt(4);
+
+						Direction futureDirection = Direction.values()[random];
+
+						e.setDirection(futureDirection);
+
+					} else {
+						e.move();
 					}
-
-					e.move();
-
 				}
 			}
 
 		};
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(30), onFinished);
+		KeyFrame keyframe = new KeyFrame(Duration.millis(ONE_SECOND / FPS),
+				actionPerFrame);
 		moveEnemy.getKeyFrames().add(keyframe);
 		moveEnemy.play();
 

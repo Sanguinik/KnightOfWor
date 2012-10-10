@@ -20,27 +20,19 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
 		case W:
 			player.setDirection(Direction.UP);
-			if (player.willCollideInFuture(player.getRectangle(),
-					player.getDirection()))
-				player.move();
+			moveDependingOnCollision();
 			break;
 		case S:
 			player.setDirection(Direction.DOWN);
-			if (player.willCollideInFuture(player.getRectangle(),
-					player.getDirection()))
-				player.move();
+			moveDependingOnCollision();
 			break;
 		case A:
 			player.setDirection(Direction.LEFT);
-			if (player.willCollideInFuture(player.getRectangle(),
-					player.getDirection()))
-				player.move();
+			moveDependingOnCollision();
 			break;
 		case D:
 			player.setDirection(Direction.RIGHT);
-			if (player.willCollideInFuture(player.getRectangle(),
-					player.getDirection()))
-				player.move();
+			moveDependingOnCollision();
 			break;
 		case SPACE:
 			player.shoot();
@@ -52,5 +44,11 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
 		}
 
+	}
+
+	private void moveDependingOnCollision() {
+		if (!player.willCollideInFuture()) {
+			player.move();
+		}
 	}
 }
