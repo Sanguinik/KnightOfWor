@@ -1,5 +1,7 @@
 package com.wordpress.marleneknoche.model;
 
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 public class Figure {
@@ -15,15 +17,21 @@ public class Figure {
 	private Maze maze;
 	private static final double DISTANCE = 3;
 	private static final double RECOIL = 1;
+	protected final Group group;
+	protected final ImageView imageView;
 
 	private final CollisionDetector cd = new CollisionDetector();
 
 	private Direction direction;
 
-	public Figure(Maze maze, TypeOfFigure type, int x, int y) {
+	public Figure(Maze maze, TypeOfFigure type, double x, double y) {
 		this.setMaze(maze);
 		rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
 		points = TypeOfFigure.getPoints(type);
+		imageView = new ImageView();
+		group = new Group();
+		getGroup().getChildren().add(rectangle);
+		getGroup().getChildren().add(imageView);
 	}
 
 	public int getPoints() {
@@ -58,7 +66,7 @@ public class Figure {
 		this.maze = maze;
 	}
 
-	public void move() { // returned true, falls Kollision
+	public void move() {
 
 		double x = rectangle.getX();
 		double y = rectangle.getY();
@@ -93,8 +101,11 @@ public class Figure {
 
 		if (collision) {
 			rectangle.setY(yForCollision);
+			imageView.setY(yForCollision);
+
 		} else {
 			rectangle.setY(yForNoCollision);
+			imageView.setY(yForNoCollision);
 		}
 	}
 
@@ -105,8 +116,10 @@ public class Figure {
 
 		if (collision) {
 			rectangle.setX(xForCollision);
+			imageView.setX(xForCollision);
 		} else {
 			rectangle.setX(xForNoCollision);
+			imageView.setX(xForNoCollision);
 		}
 
 	}
@@ -140,5 +153,9 @@ public class Figure {
 				HEIGHT);
 
 		return cd.isCollide(getMaze().getWalls(), futurePosition);
+	}
+
+	public Group getGroup() {
+		return group;
 	}
 }

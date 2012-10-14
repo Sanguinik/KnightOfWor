@@ -51,10 +51,10 @@ public class PlayFieldScreen extends Application {
 		exit.setFill(Color.ROSYBROWN);
 
 		root.getChildren().add(exit);
-		root.getChildren().add(player.getRectangle());
-		root.getChildren().add(enemy1.getRectangle());
-		root.getChildren().add(enemy2.getRectangle());
-		root.getChildren().add(enemy3.getRectangle());
+		root.getChildren().add(player.getGroup());
+		root.getChildren().add(enemy1.getGroup());
+		root.getChildren().add(enemy2.getGroup());
+		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
 
 		// moveEnemy = new Timeline();
