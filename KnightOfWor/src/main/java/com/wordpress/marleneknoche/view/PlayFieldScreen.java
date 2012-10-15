@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import com.wordpress.marleneknoche.model.Bullet;
 import com.wordpress.marleneknoche.model.Direction;
 import com.wordpress.marleneknoche.model.Enemy;
 import com.wordpress.marleneknoche.model.Keyboard;
@@ -29,12 +30,13 @@ public class PlayFieldScreen extends Application {
 
 	public Timeline moveEnemy = new Timeline();
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
+	public final static List<Bullet> bulletList = new ArrayList<Bullet>();
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
-
+    public static Group root = new Group();
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
-		Group root = new Group();
+		
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
@@ -78,6 +80,20 @@ public class PlayFieldScreen extends Application {
 						e.move();
 					}
 				}
+				
+				if (Player.getBullet().willCollideInFuture()) {
+
+					root.getChildren().remove(Player.getBullet().getRectangle());
+					Bullet.setBulletExists(false);
+
+				} else {
+					Player.getBullet().move();
+				}
+				
+			
+					
+					
+				
 			}
 
 		};

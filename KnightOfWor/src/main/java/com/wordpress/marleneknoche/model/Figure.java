@@ -1,7 +1,10 @@
 package com.wordpress.marleneknoche.model;
 
+import com.wordpress.marleneknoche.view.PlayFieldScreen;
+
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Figure {
@@ -11,7 +14,7 @@ public class Figure {
 	private static final int WIDTH = 40;
 
 	private final int points;
-	private Bullet bullet;
+	private static Bullet bullet;
 	private Boolean alive = true;
 	private final Rectangle rectangle;
 	private Maze maze;
@@ -22,7 +25,7 @@ public class Figure {
 
 	private final CollisionDetector cd = new CollisionDetector();
 
-	private Direction direction;
+	private Direction direction=Direction.RIGHT;
 
 	public Figure(Maze maze, TypeOfFigure type, double x, double y) {
 		this.setMaze(maze);
@@ -32,6 +35,14 @@ public class Figure {
 		group = new Group();
 		getGroup().getChildren().add(rectangle);
 		getGroup().getChildren().add(imageView);
+	}
+	
+	public void shoot() {
+		if(Bullet.getBulletExists()==false){
+		setBullet(new Bullet(getMaze(), Color.AQUA, getDirection(), getRectangle().getX(), getRectangle().getY()));
+		PlayFieldScreen.bulletList.add(getBullet());
+		Bullet.setBulletExists(true);
+		}
 	}
 
 	public int getPoints() {
@@ -157,5 +168,14 @@ public class Figure {
 
 	public Group getGroup() {
 		return group;
+	}
+
+
+	public static Bullet getBullet() {
+		return bullet;
+	}
+
+	public void setBullet(Bullet bullet) {
+		Figure.bullet = bullet;
 	}
 }

@@ -1,6 +1,9 @@
 package com.wordpress.marleneknoche.model;
 
+import com.wordpress.marleneknoche.view.PlayFieldScreen;
+
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public class Player extends Figure {
 
@@ -27,9 +30,7 @@ public class Player extends Figure {
 		this.score = score;
 	}
 
-	public void shoot() {
-
-	}
+	
 
 	public int getLives() {
 		return lives;
