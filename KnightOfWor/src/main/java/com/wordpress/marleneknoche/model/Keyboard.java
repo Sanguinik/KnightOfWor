@@ -9,13 +9,13 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
 	private final Player player;
 	private static final Image IMAGE_UP = new Image(
-			"/com/wordpress/marleneknoche/model/hannes_up.jpg");
+			"/com/wordpress/marleneknoche/model/hannes_up.png");
 	private static final Image IMAGE_DOWN = new Image(
-			"/com/wordpress/marleneknoche/model/hannes_down.jpg");
+			"/com/wordpress/marleneknoche/model/hannes_down.png");
 	private static final Image IMAGE_LEFT = new Image(
-			"/com/wordpress/marleneknoche/model/hannes_left.jpg");
+			"/com/wordpress/marleneknoche/model/hannes_left.png");
 	private static final Image IMAGE_RIGHT = new Image(
-			"/com/wordpress/marleneknoche/model/hannes_right.jpg");
+			"/com/wordpress/marleneknoche/model/hannes_right.png");
 
 	public Keyboard(Player player) {
 		this.player = player;

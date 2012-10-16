@@ -1,9 +1,6 @@
 package com.wordpress.marleneknoche.model;
 
-import com.wordpress.marleneknoche.view.PlayFieldScreen;
-
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 public class Player extends Figure {
 
@@ -16,7 +13,7 @@ public class Player extends Figure {
 		this.setMaze(maze); // TODO delete
 		lives = 4;
 		Image image = new Image(
-				"/com/wordpress/marleneknoche/model/hannes_right.jpg");
+				"/com/wordpress/marleneknoche/model/hannes_right.png");
 		imageView.setImage(image);
 		imageView.setX(x);
 		imageView.setY(y);
@@ -29,8 +26,6 @@ public class Player extends Figure {
 	public void setScore(int score) {
 		this.score = score;
 	}
-
-	
 
 	public int getLives() {
 		return lives;
