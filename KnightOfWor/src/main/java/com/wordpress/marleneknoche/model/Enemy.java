@@ -1,10 +1,13 @@
 package com.wordpress.marleneknoche.model;
 
+import java.util.Random;
+
 import javafx.scene.image.Image;
 
-public class Enemy extends Figure {
+public class Enemy extends ShootingFigure {
 
 	private final String name;
+	private final int points;
 	private final static String PACKAGE_PATH = "/com/wordpress/marleneknoche/model/";
 	private static final Image BURWOR_IMAGE = new Image(PACKAGE_PATH
 			+ "BURWOR.png");
@@ -18,16 +21,12 @@ public class Enemy extends Figure {
 			+ "WORLUK.png");
 
 	public Enemy(Maze maze, TypeOfFigure type, double x, double y) {
-		super(maze, type, x, y);
+		super(maze, x, y);
 		name = type.name();
-		setDirection(Direction.UP);
+		points = type.getPoints();
 		setImageByMonster(type);
 		imageView.setX(x);
 		imageView.setY(y);
-	}
-
-	public void shoot() {
-
 	}
 
 	public String getName() {
@@ -54,6 +53,18 @@ public class Enemy extends Figure {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * Enemy wechselt per zufall die Richtung wenn er kollidiert
+	 */
+	@Override
+	public void onCollision() {
+		int random = new Random().nextInt(4);
+
+		Direction futureDirection = Direction.values()[random];
+
+		setDirection(futureDirection);
 	}
 
 }

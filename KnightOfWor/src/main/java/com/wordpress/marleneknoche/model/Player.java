@@ -2,15 +2,16 @@ package com.wordpress.marleneknoche.model;
 
 import javafx.scene.image.Image;
 
-public class Player extends Figure {
+public class Player extends ShootingFigure {
 
 	private int score = 0;
 	private int lives = 4;
 	private final int maxLives = 4;
+	private final int points;
 
 	public Player(Maze maze, TypeOfFigure type, double x, double y) {
-		super(maze, type, x, y);
-		this.setMaze(maze); // TODO delete
+		super(maze, x, y);
+		points = type.getPoints();
 		lives = 4;
 		Image image = new Image(
 				"/com/wordpress/marleneknoche/model/hannes_right.png");
@@ -40,6 +41,11 @@ public class Player extends Figure {
 
 	public int getMaxLives() {
 		return maxLives;
+	}
+
+	@Override
+	public void onCollision() {
+		// Der Player macht nichts bei einer kollision.
 	}
 
 }

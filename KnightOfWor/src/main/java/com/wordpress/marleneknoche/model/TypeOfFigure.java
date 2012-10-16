@@ -2,22 +2,17 @@ package com.wordpress.marleneknoche.model;
 
 public enum TypeOfFigure {
 
-	PLAYER, BURWOR, GARWOR, THORWOR, WORLUK, WIZARD;
+	PLAYER(1000), BURWOR(100), GARWOR(200), THORWOR(500), WORLUK(1000), WIZARD(
+			2500);
 
-	public static int getPoints(TypeOfFigure type) {
-		if (type == PLAYER)
-			return 1000;
-		if (type == BURWOR)
-			return 100;
-		if (type == GARWOR)
-			return 200;
-		if (type == THORWOR)
-			return 500;
-		if (type == WORLUK)
-			return 1000;
-		if (type == WIZARD)
-			return 2500;
-		return 0;
+	private int points;
+
+	private TypeOfFigure(int points) {
+		this.points = points;
+	}
+
+	public int getPoints() {
+		return points;
 	}
 
 }

@@ -29,22 +29,22 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
 		case W:
 			player.setDirection(Direction.UP);
-			moveDependingOnCollision();
+			player.move();
 			player.imageView.setImage(IMAGE_UP);
 			break;
 		case S:
 			player.setDirection(Direction.DOWN);
-			moveDependingOnCollision();
+			player.move();
 			player.imageView.setImage(IMAGE_DOWN);
 			break;
 		case A:
 			player.setDirection(Direction.LEFT);
-			moveDependingOnCollision();
+			player.move();
 			player.imageView.setImage(IMAGE_LEFT);
 			break;
 		case D:
 			player.setDirection(Direction.RIGHT);
-			moveDependingOnCollision();
+			player.move();
 			player.imageView.setImage(IMAGE_RIGHT);
 			break;
 		case SPACE:
@@ -57,11 +57,5 @@ public class Keyboard implements EventHandler<KeyEvent> {
 
 		}
 
-	}
-
-	private void moveDependingOnCollision() {
-		if (!player.willCollideInFuture()) {
-			player.move();
-		}
 	}
 }

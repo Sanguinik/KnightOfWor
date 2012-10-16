@@ -1,59 +1,40 @@
 package com.wordpress.marleneknoche.model;
 
-import com.wordpress.marleneknoche.view.PlayFieldScreen;
-
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Figure {
+public abstract class Figure {
 
 	private static final int HEIGHT = 40;
 
 	private static final int WIDTH = 40;
 
-	private final int points;
-	private static Bullet bullet;
-	private Boolean alive = true;
-	private final Rectangle rectangle;
-	private Maze maze;
-	private static final double DISTANCE = 3;
-	private static final double RECOIL = 1;
+	private boolean alive = true;
+	private final Maze maze;
+	protected double distance = 3;
 	protected final Group group;
+	protected final Rectangle rectangle;
 	protected final ImageView imageView;
 
 	private final CollisionDetector cd = new CollisionDetector();
 
-	private Direction direction=Direction.RIGHT;
+	private Direction direction = Direction.RIGHT;
 
-	public Figure(Maze maze, TypeOfFigure type, double x, double y) {
-		this.setMaze(maze);
+	public Figure(Maze maze, double x, double y) {
+		this.maze = maze;
 		rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
-		points = TypeOfFigure.getPoints(type);
 		imageView = new ImageView();
 		group = new Group();
-		getGroup().getChildren().add(rectangle);
-		getGroup().getChildren().add(imageView);
-	}
-	
-	public void shoot() {
-		if(Bullet.getBulletExists()==false){
-		setBullet(new Bullet(getMaze(), Color.AQUA, getDirection(), getRectangle().getX(), getRectangle().getY()));
-		PlayFieldScreen.bulletList.add(getBullet());
-		Bullet.setBulletExists(true);
-		}
+		group.getChildren().add(rectangle);
+		group.getChildren().add(imageView);
 	}
 
-	public int getPoints() {
-		return points;
-	}
-
-	public Boolean isAlive() {
+	public boolean isAlive() {
 		return alive;
 	}
 
-	public void setAlive(Boolean alive) {
+	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
 
@@ -69,91 +50,72 @@ public class Figure {
 		return direction;
 	}
 
-	public Maze getMaze() {
-		return maze;
-	}
-
-	public void setMaze(Maze maze) {
-		this.maze = maze;
-	}
-
 	public void move() {
 
-		double x = rectangle.getX();
-		double y = rectangle.getY();
+		if (willCollideInFuture()) {
+			onCollision();
+		} else {
 
-		switch (direction) {
-		case UP:
+			double x = rectangle.getX();
+			double y = rectangle.getY();
 
-			moveYDependingOnCollision(y + RECOIL, y - DISTANCE);
-			break;
+			switch (direction) {
+			case UP:
 
-		case DOWN:
+				setY(y - distance);
 
-			moveYDependingOnCollision(y - RECOIL, y + DISTANCE);
-			break;
+				break;
 
-		case LEFT:
+			case DOWN:
 
-			moveXDependingOnCollision(x + RECOIL, x - DISTANCE);
-			break;
-		case RIGHT:
+				setY(y + distance);
+				break;
 
-			moveXDependingOnCollision(x - RECOIL, x + DISTANCE);
-			break;
+			case LEFT:
 
+				setX(x - distance);
+				break;
+			case RIGHT:
+
+				setX(x + distance);
+				break;
+
+			}
 		}
+
 	}
 
-	private void moveYDependingOnCollision(double yForCollision,
-			double yForNoCollision) {
+	public abstract void onCollision();
 
-		boolean collision = cd.isCollide(getMaze().getWalls(), rectangle);
-
-		if (collision) {
-			rectangle.setY(yForCollision);
-			imageView.setY(yForCollision);
-
-		} else {
-			rectangle.setY(yForNoCollision);
-			imageView.setY(yForNoCollision);
-		}
+	private void setY(double y) {
+		rectangle.setY(y);
+		imageView.setY(y);
 	}
 
-	private void moveXDependingOnCollision(double xForCollision,
-			double xForNoCollision) {
-
-		boolean collision = cd.isCollide(getMaze().getWalls(), rectangle);
-
-		if (collision) {
-			rectangle.setX(xForCollision);
-			imageView.setX(xForCollision);
-		} else {
-			rectangle.setX(xForNoCollision);
-			imageView.setX(xForNoCollision);
-		}
-
+	private void setX(double x) {
+		rectangle.setX(x);
+		imageView.setX(x);
 	}
 
 	public boolean willCollideInFuture() {
-		Double moveX = 0.0;
-		Double moveY = 0.0;
+		double moveX = 0.0;
+		double moveY = 0.0;
 
 		switch (direction) {
 		case UP:
-			moveY = -DISTANCE;
+			moveY = -distance;
 			break;
 
 		case DOWN:
-			moveY = DISTANCE;
+			moveY = distance;
 			break;
 
 		case LEFT:
-			moveX = -DISTANCE;
+			moveX = -distance;
 			break;
 
 		case RIGHT:
-			moveX = DISTANCE;
+			moveX = distance;
 			break;
 		}
 
@@ -163,19 +125,11 @@ public class Figure {
 		Rectangle futurePosition = new Rectangle(futureX, futureY, WIDTH,
 				HEIGHT);
 
-		return cd.isCollide(getMaze().getWalls(), futurePosition);
+		return cd.isCollide(maze.getWalls(), futurePosition);
 	}
 
 	public Group getGroup() {
 		return group;
 	}
 
-
-	public static Bullet getBullet() {
-		return bullet;
-	}
-
-	public void setBullet(Bullet bullet) {
-		Figure.bullet = bullet;
-	}
 }

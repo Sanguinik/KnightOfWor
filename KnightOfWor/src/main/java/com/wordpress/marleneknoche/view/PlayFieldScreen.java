@@ -24,27 +24,66 @@ import com.wordpress.marleneknoche.model.Enemy;
 import com.wordpress.marleneknoche.model.Keyboard;
 import com.wordpress.marleneknoche.model.Maze;
 import com.wordpress.marleneknoche.model.Player;
+import com.wordpress.marleneknoche.model.ShootingFigure;
 import com.wordpress.marleneknoche.model.TypeOfFigure;
+import com.wordpress.marleneknoche.util.Callback;
 
 public class PlayFieldScreen extends Application {
 
+	private final class CallbackImplementation implements Callback {
+		private final ShootingFigure shootingFigure;
+
+		private CallbackImplementation(ShootingFigure shootingFigure) {
+			this.shootingFigure = shootingFigure;
+		}
+
+		@Override
+		public void call() {
+			double x = shootingFigure.getRectangle().getX();
+			double y = shootingFigure.getRectangle().getY();
+			Direction direction = shootingFigure.getDirection();
+			final Bullet bullet = new Bullet(maze, Color.ANTIQUEWHITE,
+					direction, x, y);
+			bullet.addCollisionCallback(new Callback() {
+
+				@Override
+				public void call() {
+					shootingFigure.bulletHasArrived();
+				}
+			});
+			bulletList.add(bullet);
+			root.getChildren().add(bullet.getRectangle());
+		}
+	}
+
 	public Timeline moveEnemy = new Timeline();
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
-	public final static List<Bullet> bulletList = new ArrayList<Bullet>();
+	private final List<Bullet> bulletList = new ArrayList<Bullet>();
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
-    public static Group root = new Group();
+	private final Group root = new Group();
+	/**
+	 * Mit einer Wahrschnlichkeit von 0.5 wird ein mal pro Sekunde geschossen.
+	 */
+	private static final double SHOOT_LIKELIHOOD = 0.5;
+	private Maze maze;
+
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
-		
+
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
-		final Maze maze = new Maze();
-		Player player = new Player(maze, TypeOfFigure.PLAYER, 130, 510);
+		maze = new Maze();
+		final Player player = new Player(maze, TypeOfFigure.PLAYER, 130, 510);
+		player.setOnShootCallback(new CallbackImplementation(player));
+
 		Enemy enemy1 = new Enemy(maze, TypeOfFigure.BURWOR, 130, 130);
+		enemy1.setOnShootCallback(new CallbackImplementation(enemy1));
 		Enemy enemy2 = new Enemy(maze, TypeOfFigure.GARWOR, 855, 510);
+		enemy2.setOnShootCallback(new CallbackImplementation(enemy2));
 		Enemy enemy3 = new Enemy(maze, TypeOfFigure.THORWOR, 855, 130);
+		enemy3.setOnShootCallback(new CallbackImplementation(enemy3));
 		enemyList.add(enemy1);
 		enemyList.add(enemy2);
 		enemyList.add(enemy3);
@@ -67,33 +106,10 @@ public class PlayFieldScreen extends Application {
 
 			@Override
 			public void handle(ActionEvent t) {
-				for (Enemy e : enemyList) {
-					if (e.willCollideInFuture()) {
+				moveAllEnemies();
 
-						int random = new Random().nextInt(4);
+				moveAllBullets();
 
-						Direction futureDirection = Direction.values()[random];
-
-						e.setDirection(futureDirection);
-
-					} else {
-						e.move();
-					}
-				}
-				
-				if (Player.getBullet().willCollideInFuture()) {
-
-					root.getChildren().remove(Player.getBullet().getRectangle());
-					Bullet.setBulletExists(false);
-
-				} else {
-					Player.getBullet().move();
-				}
-				
-			
-					
-					
-				
 			}
 
 		};
@@ -129,5 +145,30 @@ public class PlayFieldScreen extends Application {
 			}
 		});
 
+	}
+
+	private void moveAllBullets() {
+		List<Bullet> bulletsToDelete = new ArrayList<Bullet>();
+		for (Bullet b : bulletList) {
+			b.move();
+			if (!b.isActive()) {
+				bulletsToDelete.add(b);
+			}
+		}
+		for (Bullet b : bulletsToDelete) {
+			bulletList.remove(b);
+			root.getChildren().remove(b.getRectangle());
+		}
+	}
+
+	private void moveAllEnemies() {
+		for (Enemy e : enemyList) {
+			e.move();
+			int d = (int) (FPS * (1 / SHOOT_LIKELIHOOD));
+			int random = new Random().nextInt(d);
+			if (random == 0) {
+				e.shoot();
+			}
+		}
 	}
 }
