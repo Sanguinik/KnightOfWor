@@ -30,22 +30,22 @@ public class Keyboard implements EventHandler<KeyEvent> {
 		case W:
 			player.setDirection(Direction.UP);
 			player.move();
-			player.imageView.setImage(IMAGE_UP);
+			player.getImageView().setImage(IMAGE_UP);
 			break;
 		case S:
 			player.setDirection(Direction.DOWN);
 			player.move();
-			player.imageView.setImage(IMAGE_DOWN);
+			player.getImageView().setImage(IMAGE_DOWN);
 			break;
 		case A:
 			player.setDirection(Direction.LEFT);
 			player.move();
-			player.imageView.setImage(IMAGE_LEFT);
+			player.getImageView().setImage(IMAGE_LEFT);
 			break;
 		case D:
 			player.setDirection(Direction.RIGHT);
 			player.move();
-			player.imageView.setImage(IMAGE_RIGHT);
+			player.getImageView().setImage(IMAGE_RIGHT);
 			break;
 		case SPACE:
 			player.shoot();

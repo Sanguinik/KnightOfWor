@@ -19,7 +19,7 @@ public class TitleScreen extends Application {
 
 	private static final double BUTTON_SIZE = 120.0;
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		launch(args);
 	}
 
@@ -41,13 +41,9 @@ public class TitleScreen extends Application {
 		newGame.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent arg0) {
+			public void handle(final ActionEvent arg0) {
 				PlayFieldScreen psc = new PlayFieldScreen();
-				try {
-					psc.start(primaryStage);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				psc.start(primaryStage);
 			}
 
 		});
@@ -60,7 +56,7 @@ public class TitleScreen extends Application {
 		options.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent arg0) {
+			public void handle(final ActionEvent arg0) {
 				Options optionsGUI = new Options();
 				optionsGUI.start(primaryStage);
 			}
@@ -74,7 +70,7 @@ public class TitleScreen extends Application {
 		highscore.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent arg0) {
+			public void handle(final ActionEvent arg0) {
 				HighscoreScreen highscoreScreen = new HighscoreScreen();
 				highscoreScreen.start(primaryStage);
 			}
@@ -88,7 +84,7 @@ public class TitleScreen extends Application {
 
 		about.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent event) {
+			public void handle(final ActionEvent event) {
 				Credits credits = new Credits();
 				credits.start(primaryStage);
 			}
@@ -101,7 +97,7 @@ public class TitleScreen extends Application {
 
 		close.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent event) {
+			public void handle(final ActionEvent event) {
 				System.exit(0);
 			}
 		});

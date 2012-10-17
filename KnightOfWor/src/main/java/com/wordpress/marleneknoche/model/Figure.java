@@ -12,16 +12,16 @@ public abstract class Figure {
 
 	private boolean alive = true;
 	private final Maze maze;
-	protected double distance = 3;
-	protected final Group group;
-	protected final Rectangle rectangle;
-	protected final ImageView imageView;
+	private double distance = 3;
+	private final Group group;
+	private final Rectangle rectangle;
+	private final ImageView imageView;
 
 	private final CollisionDetector cd = new CollisionDetector();
 
 	private Direction direction = Direction.RIGHT;
 
-	public Figure(Maze maze, double x, double y) {
+	public Figure(final Maze maze, final double x, final double y) {
 		this.maze = maze;
 		rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
 		imageView = new ImageView();
@@ -30,11 +30,19 @@ public abstract class Figure {
 		group.getChildren().add(imageView);
 	}
 
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(final double distance) {
+		this.distance = distance;
+	}
+
 	public boolean isAlive() {
 		return alive;
 	}
 
-	public void setAlive(boolean alive) {
+	public void setAlive(final boolean alive) {
 		this.alive = alive;
 	}
 
@@ -42,7 +50,7 @@ public abstract class Figure {
 		return rectangle;
 	}
 
-	public void setDirection(Direction direction) {
+	public void setDirection(final Direction direction) {
 		this.direction = direction;
 	}
 
@@ -56,8 +64,8 @@ public abstract class Figure {
 			onCollision();
 		} else {
 
-			double x = rectangle.getX();
-			double y = rectangle.getY();
+			double x = getRectangle().getX();
+			double y = getRectangle().getY();
 
 			switch (direction) {
 			case UP:
@@ -87,14 +95,14 @@ public abstract class Figure {
 
 	public abstract void onCollision();
 
-	private void setY(double y) {
-		rectangle.setY(y);
-		imageView.setY(y);
+	private void setY(final double y) {
+		getRectangle().setY(y);
+		getImageView().setY(y);
 	}
 
-	private void setX(double x) {
-		rectangle.setX(x);
-		imageView.setX(x);
+	private void setX(final double x) {
+		getRectangle().setX(x);
+		getImageView().setX(x);
 	}
 
 	public boolean willCollideInFuture() {
@@ -119,8 +127,8 @@ public abstract class Figure {
 			break;
 		}
 
-		double futureX = rectangle.getX() + moveX;
-		double futureY = rectangle.getY() + moveY;
+		double futureX = getRectangle().getX() + moveX;
+		double futureY = getRectangle().getY() + moveY;
 
 		Rectangle futurePosition = new Rectangle(futureX, futureY, WIDTH,
 				HEIGHT);
@@ -130,6 +138,10 @@ public abstract class Figure {
 
 	public Group getGroup() {
 		return group;
+	}
+
+	public ImageView getImageView() {
+		return imageView;
 	}
 
 }

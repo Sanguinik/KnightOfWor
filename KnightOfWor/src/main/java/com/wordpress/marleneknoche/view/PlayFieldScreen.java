@@ -33,7 +33,7 @@ public class PlayFieldScreen extends Application {
 	private final class CallbackImplementation implements Callback {
 		private final ShootingFigure shootingFigure;
 
-		private CallbackImplementation(ShootingFigure shootingFigure) {
+		private CallbackImplementation(final ShootingFigure shootingFigure) {
 			this.shootingFigure = shootingFigure;
 		}
 
@@ -56,7 +56,7 @@ public class PlayFieldScreen extends Application {
 		}
 	}
 
-	public Timeline moveEnemy = new Timeline();
+	private final Timeline moveEnemy = new Timeline();
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
 	private final List<Bullet> bulletList = new ArrayList<Bullet>();
 	private static final int ONE_SECOND = 1000;
@@ -69,13 +69,13 @@ public class PlayFieldScreen extends Application {
 	private Maze maze;
 
 	@Override
-	public void start(final Stage primaryStage) throws Exception {
+	public void start(final Stage primaryStage) {
 
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
 		maze = new Maze();
-		final Player player = new Player(maze, TypeOfFigure.PLAYER, 130, 510);
+		final Player player = new Player(maze, 130, 510);
 		player.setOnShootCallback(new CallbackImplementation(player));
 
 		Enemy enemy1 = new Enemy(maze, TypeOfFigure.BURWOR, 130, 130);
@@ -98,14 +98,13 @@ public class PlayFieldScreen extends Application {
 		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
 
-		// moveEnemy = new Timeline();
 		moveEnemy.setCycleCount(Timeline.INDEFINITE);
 		moveEnemy.setAutoReverse(false);
 
 		EventHandler<ActionEvent> actionPerFrame = new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent t) {
+			public void handle(final ActionEvent t) {
 				moveAllEnemies();
 
 				moveAllBullets();
@@ -122,7 +121,7 @@ public class PlayFieldScreen extends Application {
 		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent arg0) {
+			public void handle(final MouseEvent arg0) {
 				GameOver gameOver = new GameOver();
 				gameOver.start(primaryStage);
 				moveEnemy.stop();
@@ -139,7 +138,7 @@ public class PlayFieldScreen extends Application {
 
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
-			public void handle(WindowEvent w) {
+			public void handle(final WindowEvent w) {
 				moveEnemy.stop();
 				System.exit(0);
 			}

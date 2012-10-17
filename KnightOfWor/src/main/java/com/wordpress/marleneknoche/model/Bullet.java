@@ -9,16 +9,15 @@ import com.wordpress.marleneknoche.util.Callback;
 
 public class Bullet extends Figure {
 
-	private String owner;
 	private final List<Callback> collisionCallbacks = new ArrayList<Callback>();
 	private boolean active = true;
 
-	public Bullet(Maze maze, Color color, Direction direction, double x,
-			double y) {
+	public Bullet(final Maze maze, final Color color,
+			final Direction direction, final double x, final double y) {
 		super(maze, x, y);
 		setDirection(direction);
-		this.distance = 6;
-		rectangle.setFill(color);
+		setDistance(6);
+		getRectangle().setFill(color);
 	}
 
 	public void isHitByOtherBullet() {
@@ -33,7 +32,7 @@ public class Bullet extends Figure {
 		}
 	}
 
-	public void addCollisionCallback(Callback callback) {
+	public void addCollisionCallback(final Callback callback) {
 		collisionCallbacks.add(callback);
 	}
 
@@ -41,7 +40,7 @@ public class Bullet extends Figure {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(final boolean active) {
 		this.active = active;
 	}
 
