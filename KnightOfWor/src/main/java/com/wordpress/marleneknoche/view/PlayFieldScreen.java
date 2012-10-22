@@ -12,6 +12,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -62,6 +65,10 @@ public class PlayFieldScreen extends Application {
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
 	private final Group root = new Group();
+	
+	Media music = new Media("file:/c:/KoWL.mp3");
+	MediaPlayer mPlayer = new MediaPlayer(music);
+	
 	/**
 	 * Mit einer Wahrschnlichkeit von 0.5 wird ein mal pro Sekunde geschossen.
 	 */
@@ -73,6 +80,12 @@ public class PlayFieldScreen extends Application {
 
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
+
+		
+		mPlayer.setVolume(0.5);
+        mPlayer.play();
+       
+
 
 		maze = new Maze();
 		final Player player = new Player(maze, TypeOfFigure.PLAYER, 130, 510);
@@ -97,6 +110,11 @@ public class PlayFieldScreen extends Application {
 		root.getChildren().add(enemy2.getGroup());
 		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
+		
+	
+		
+    
+
 
 		// moveEnemy = new Timeline();
 		moveEnemy.setCycleCount(Timeline.INDEFINITE);

@@ -7,6 +7,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 /**
@@ -20,6 +23,7 @@ public class TitleScreen extends Application {
 	private static final double BUTTON_SIZE = 120.0;
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 
@@ -27,7 +31,12 @@ public class TitleScreen extends Application {
 	public void start(final Stage primaryStage) {
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
-
+		
+		Media sound = new Media("file:/C:/KoW.mp3");
+		final MediaPlayer pl = new MediaPlayer(sound);
+        pl.play();
+		
+		
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(30);
@@ -42,6 +51,7 @@ public class TitleScreen extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				pl.stop();
 				PlayFieldScreen psc = new PlayFieldScreen();
 				try {
 					psc.start(primaryStage);
