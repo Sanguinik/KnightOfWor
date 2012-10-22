@@ -1,5 +1,6 @@
 package com.wordpress.marleneknoche.view;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -65,10 +65,10 @@ public class PlayFieldScreen extends Application {
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
 	private final Group root = new Group();
-	
-	Media music = new Media("file:/c:/KoWL.mp3");
-	MediaPlayer mPlayer = new MediaPlayer(music);
-	
+
+	private Media music;
+	private MediaPlayer mediaPlayer;
+
 	/**
 	 * Mit einer Wahrschnlichkeit von 0.5 wird ein mal pro Sekunde geschossen.
 	 */
@@ -81,12 +81,16 @@ public class PlayFieldScreen extends Application {
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
-		
-		mPlayer.setVolume(0.5);
-        mPlayer.play();
-       
+		URL pathToLevelMusic = getClass().getResource("KoWL.mp3");
+		if (pathToLevelMusic != null) {
+			music = new Media(pathToLevelMusic.toString());
+			mediaPlayer = new MediaPlayer(music);
 
-
+			mediaPlayer.setVolume(0.5);
+			mediaPlayer.play();
+		} else {
+			System.err.println("Musikdatei 'KoWL.pm3' nicht gefunden!");
+		}
 		maze = new Maze();
 		final Player player = new Player(maze, TypeOfFigure.PLAYER, 130, 510);
 		player.setOnShootCallback(new CallbackImplementation(player));
@@ -110,11 +114,6 @@ public class PlayFieldScreen extends Application {
 		root.getChildren().add(enemy2.getGroup());
 		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
-		
-	
-		
-    
-
 
 		// moveEnemy = new Timeline();
 		moveEnemy.setCycleCount(Timeline.INDEFINITE);
@@ -143,6 +142,9 @@ public class PlayFieldScreen extends Application {
 			public void handle(MouseEvent arg0) {
 				GameOver gameOver = new GameOver();
 				gameOver.start(primaryStage);
+				if (mediaPlayer != null) {
+					mediaPlayer.stop();
+				}
 				moveEnemy.stop();
 			}
 
@@ -159,6 +161,9 @@ public class PlayFieldScreen extends Application {
 			@Override
 			public void handle(WindowEvent w) {
 				moveEnemy.stop();
+				if (mediaPlayer != null) {
+					mediaPlayer.stop();
+				}
 				System.exit(0);
 			}
 		});

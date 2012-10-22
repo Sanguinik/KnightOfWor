@@ -1,5 +1,7 @@
 package com.wordpress.marleneknoche.view;
 
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -21,9 +22,10 @@ import javafx.stage.Stage;
 public class TitleScreen extends Application {
 
 	private static final double BUTTON_SIZE = 120.0;
+	private MediaPlayer player;
 
 	public static void main(String[] args) {
-		
+
 		launch(args);
 	}
 
@@ -31,12 +33,14 @@ public class TitleScreen extends Application {
 	public void start(final Stage primaryStage) {
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
-		
-		Media sound = new Media("file:/C:/KoW.mp3");
-		final MediaPlayer pl = new MediaPlayer(sound);
-        pl.play();
-		
-		
+		URL pathToTitleMusic = getClass().getResource("KoW.mp3");
+		if (pathToTitleMusic != null) {
+			Media sound = new Media(pathToTitleMusic.toString());
+			player = new MediaPlayer(sound);
+			player.play();
+		} else {
+			System.err.println("Musikdatei 'KoW.mp3' wurde nicht gefunden!");
+		}
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(30);
@@ -51,7 +55,9 @@ public class TitleScreen extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				pl.stop();
+				if (player != null) {
+					player.stop();
+				}
 				PlayFieldScreen psc = new PlayFieldScreen();
 				try {
 					psc.start(primaryStage);

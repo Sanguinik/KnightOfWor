@@ -1,8 +1,8 @@
 package com.wordpress.marleneknoche.model;
 
+import java.net.URL;
+
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import com.wordpress.marleneknoche.util.Callback;
 
@@ -10,25 +10,27 @@ public abstract class ShootingFigure extends Figure {
 
 	private boolean hasBullet;
 	private Callback onShootCallback;
-	
-	AudioClip sound = new AudioClip("file:/C:/fire.mp3");
-	//Media sound = new Media("file:/c:/fire.mp3");
-	//MediaPlayer pl = new MediaPlayer(sound);
-	
+	private AudioClip sound;
 
 	public ShootingFigure(Maze maze, double x, double y) {
 		super(maze, x, y);
 	}
 
 	public void shoot() {
+		URL resource = getClass().getResource("fire.mp3");
+		if (resource != null) {
+			sound = new AudioClip(resource.toString());
+		}
+
 		if (!hasBullet) {
 			hasBullet = true;
 			// schieße
-			if(!sound.isPlaying()){
-			sound.play();}
-			
+			if (!sound.isPlaying()) {
+				sound.play();
+			}
+
 			onShootCallback.call();
-			
+
 		}
 	}
 
