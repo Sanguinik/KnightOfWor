@@ -9,7 +9,7 @@ public class Player extends ShootingFigure {
 	private static final int MAX_LIVES = 4;
 
 	public Player(final Maze maze, final double x, final double y) {
-		super(maze, x, y);
+		super(maze, TypeOfFigure.PLAYER, x, y);
 		lives = 4;
 		Image image = new Image(
 				"/com/wordpress/marleneknoche/model/hannes_right.png");
@@ -24,6 +24,12 @@ public class Player extends ShootingFigure {
 
 	public void setScore(final int score) {
 		this.score = score;
+	}
+
+	@Override
+	public void setAlive(final boolean alive) {
+		super.setAlive(alive);
+		System.out.println("Oh no, I'm Dead");
 	}
 
 	public int getLives() {
@@ -42,8 +48,19 @@ public class Player extends ShootingFigure {
 	}
 
 	@Override
-	public void onCollision() {
+	public void onCollisionWithMaze() {
 		// Der Player macht nichts bei einer kollision.
+	}
+
+	@Override
+	public void bulletHasHitATarget(final Figure target) {
+		System.out.println("Hit");
+		super.bulletHasHitATarget(target);
+		target.setAlive(false);
+
+		int points = target.getType().getPoints();
+		score += points;
+		System.out.println("new Score:" + score);
 	}
 
 }

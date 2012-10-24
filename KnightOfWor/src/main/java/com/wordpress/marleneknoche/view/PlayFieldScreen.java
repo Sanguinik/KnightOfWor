@@ -24,87 +24,83 @@ import com.wordpress.marleneknoche.model.Enemy;
 import com.wordpress.marleneknoche.model.Keyboard;
 import com.wordpress.marleneknoche.model.Maze;
 import com.wordpress.marleneknoche.model.Player;
+import com.wordpress.marleneknoche.model.ShootCallback;
 import com.wordpress.marleneknoche.model.ShootingFigure;
 import com.wordpress.marleneknoche.model.TypeOfFigure;
 import com.wordpress.marleneknoche.util.Callback;
 
 public class PlayFieldScreen extends Application {
 
-	private final class CallbackImplementation implements Callback {
-		private final ShootingFigure shootingFigure;
 
-		private CallbackImplementation(final ShootingFigure shootingFigure) {
-			this.shootingFigure = shootingFigure;
-		}
-
+	private class ShootCallbackImpl implements ShootCallback {
 		@Override
-		public void call() {
-			double x = shootingFigure.getRectangle().getX();
-			double y = shootingFigure.getRectangle().getY();
-			Direction direction = shootingFigure.getDirection();
-			final Bullet bullet = new Bullet(maze, Color.ANTIQUEWHITE,
-					direction, x, y);
-			bullet.addCollisionCallback(new Callback() {
-
-				@Override
-				public void call() {
-					shootingFigure.bulletHasArrived();
-				}
-			});
+		public void shootBullet(final Bullet bullet) {
 			bulletList.add(bullet);
 			root.getChildren().add(bullet.getRectangle());
 		}
 	}
 
-	private final Timeline moveEnemy = new Timeline();
+	private final Timeline timeline = new Timeline();
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
 	private final List<Bullet> bulletList = new ArrayList<Bullet>();
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
 	private final Group root = new Group();
 	/**
-	 * Mit einer Wahrschnlichkeit von 0.5 wird ein mal pro Sekunde geschossen.
+	 * Mit dieser Wahrschnlichkeit wird ein mal pro Sekunde geschossen.
 	 */
-	private static final double SHOOT_LIKELIHOOD = 0.5;
+	private static final double SHOOT_LIKELIHOOD = 0.7;
 	private Maze maze;
+
+	private Player player;
+
+	private Stage primaryStage;
+
+	private Enemy createEnemy(final TypeOfFigure enemyType, final int x,
+			final int y) {
+		Enemy enemy = new Enemy(maze, enemyType, x, y);
+		enemy.addTargets(player);
+		enemy.setShootCallback(new ShootCallbackImpl());
+
+		enemyList.add(enemy);
+		return enemy;
+	}
 
 	@Override
 	public void start(final Stage primaryStage) {
-
+		this.primaryStage = primaryStage;
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
 		maze = new Maze();
-		final Player player = new Player(maze, 130, 510);
-		player.setOnShootCallback(new CallbackImplementation(player));
+		player = new Player(maze, 130, 510);
+		player.setShootCallback(new ShootCallbackImpl());
 
-		Enemy enemy1 = new Enemy(maze, TypeOfFigure.BURWOR, 130, 130);
-		enemy1.setOnShootCallback(new CallbackImplementation(enemy1));
-		Enemy enemy2 = new Enemy(maze, TypeOfFigure.GARWOR, 855, 510);
-		enemy2.setOnShootCallback(new CallbackImplementation(enemy2));
-		Enemy enemy3 = new Enemy(maze, TypeOfFigure.THORWOR, 855, 130);
-		enemy3.setOnShootCallback(new CallbackImplementation(enemy3));
-		enemyList.add(enemy1);
-		enemyList.add(enemy2);
-		enemyList.add(enemy3);
+
+		final Enemy enemy1 = createEnemy(TypeOfFigure.BURWOR, 130, 130);
+		final Enemy enemy2 = createEnemy(TypeOfFigure.GARWOR, 855, 510);
+		final Enemy enemy3 = createEnemy(TypeOfFigure.THORWOR, 855, 130);
+
+		player.addTargets(enemy1, enemy2, enemy3);
+
 		Keyboard keyboard = new Keyboard(player);
-		Rectangle exit = new Rectangle(400, 300, 100, 100);
-		exit.setFill(Color.ROSYBROWN);
 
-		root.getChildren().add(exit);
 		root.getChildren().add(player.getGroup());
 		root.getChildren().add(enemy1.getGroup());
 		root.getChildren().add(enemy2.getGroup());
 		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
 
-		moveEnemy.setCycleCount(Timeline.INDEFINITE);
-		moveEnemy.setAutoReverse(false);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.setAutoReverse(false);
 
 		EventHandler<ActionEvent> actionPerFrame = new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(final ActionEvent t) {
+
+				checkThatPlayerIsStillAlive();
+
 				moveAllEnemies();
 
 				moveAllBullets();
@@ -115,19 +111,8 @@ public class PlayFieldScreen extends Application {
 
 		KeyFrame keyframe = new KeyFrame(Duration.millis(ONE_SECOND / FPS),
 				actionPerFrame);
-		moveEnemy.getKeyFrames().add(keyframe);
-		moveEnemy.play();
-
-		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(final MouseEvent arg0) {
-				GameOver gameOver = new GameOver();
-				gameOver.start(primaryStage);
-				moveEnemy.stop();
-			}
-
-		});
+		timeline.getKeyFrames().add(keyframe);
+		timeline.play();
 
 		Scene scene = new Scene(root, 1024, 740);
 		scene.setOnKeyPressed(keyboard);
@@ -139,11 +124,17 @@ public class PlayFieldScreen extends Application {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(final WindowEvent w) {
-				moveEnemy.stop();
+				timeline.stop();
 				System.exit(0);
 			}
 		});
 
+	}
+
+	private void checkThatPlayerIsStillAlive() {
+		if (!player.isAlive()) {
+			gameOver();
+		}
 	}
 
 	private void moveAllBullets() {
@@ -161,13 +152,34 @@ public class PlayFieldScreen extends Application {
 	}
 
 	private void moveAllEnemies() {
+		List<Enemy> enemiesToDelete = new ArrayList<Enemy>();
+
+		if (enemyList.isEmpty()) {
+			gameOver();
+		}
+
 		for (Enemy e : enemyList) {
-			e.move();
-			int d = (int) (FPS * (1 / SHOOT_LIKELIHOOD));
-			int random = new Random().nextInt(d);
-			if (random == 0) {
-				e.shoot();
+			if (e.isAlive()) {
+				e.move();
+				int d = (int) (FPS * (1 / SHOOT_LIKELIHOOD));
+				int random = new Random().nextInt(d);
+				if (random == 0) {
+					e.shoot();
+				}
+			} else {
+				enemiesToDelete.add(e);
 			}
 		}
+
+		for (Enemy e : enemiesToDelete) {
+			enemyList.remove(e);
+			root.getChildren().remove(e.getGroup());
+		}
+	}
+
+	private void gameOver() {
+		final GameOver gameOver = new GameOver();
+		gameOver.start(primaryStage);
+		timeline.stop();
 	}
 }

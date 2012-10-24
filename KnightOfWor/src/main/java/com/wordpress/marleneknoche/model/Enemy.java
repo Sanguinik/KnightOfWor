@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 
 public class Enemy extends ShootingFigure {
 
-	private final String name;
 	private static final String PACKAGE_PATH = "/com/wordpress/marleneknoche/model/";
 	private static final Image BURWOR_IMAGE = new Image(PACKAGE_PATH
 			+ "BURWOR.png");
@@ -21,15 +20,14 @@ public class Enemy extends ShootingFigure {
 
 	public Enemy(final Maze maze, final TypeOfFigure type, final double x,
 			final double y) {
-		super(maze, x, y);
-		name = type.name();
+		super(maze, type, x, y);
 		setImageByMonster(type);
 		getImageView().setX(x);
 		getImageView().setY(y);
 	}
 
 	public String getName() {
-		return name;
+		return getType().name();
 	}
 
 	private void setImageByMonster(final TypeOfFigure type) {
@@ -58,12 +56,19 @@ public class Enemy extends ShootingFigure {
 	 * Enemy wechselt per zufall die Richtung wenn er kollidiert
 	 */
 	@Override
-	public void onCollision() {
+	public void onCollisionWithMaze() {
 		int random = new Random().nextInt(4);
 
 		Direction futureDirection = Direction.values()[random];
 
 		setDirection(futureDirection);
+	}
+
+	@Override
+	public void bulletHasHitATarget(final Figure target) {
+		super.bulletHasHitATarget(target);
+
+		target.setAlive(false);
 	}
 
 }
