@@ -196,6 +196,7 @@ public class PlayFieldScreen extends Application {
 		for (Enemy e : enemiesToDelete) {
 			enemyList.remove(e);
 			root.getChildren().remove(e.getGroup());
+			player.getTargets().remove(e);
 		}
 	}
 
