@@ -20,9 +20,9 @@ public class CollisionDetector {
 		return false;
 	}
 
-	public boolean isCollide(List<Rectangle> walls, Rectangle r) {
-		for (Rectangle wall : walls) {
-			if (isCollide(wall, r)) {
+	public boolean isCollide(List<Rectangle> rectsToCheckForCollision, Rectangle r) {
+		for (Rectangle current : rectsToCheckForCollision) {
+			if (isCollide(current, r)) {
 				return true;
 			}
 

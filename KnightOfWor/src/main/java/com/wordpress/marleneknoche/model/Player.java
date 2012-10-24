@@ -6,46 +6,61 @@ public class Player extends ShootingFigure {
 
 	private int score = 0;
 	private int lives = 4;
-	private final int maxLives = 4;
-	private final int points;
+	private static final int MAX_LIVES = 4;
 
-	public Player(Maze maze, TypeOfFigure type, double x, double y) {
-		super(maze, x, y);
-		points = type.getPoints();
+	public Player(final Maze maze, final double x, final double y) {
+		super(maze, TypeOfFigure.PLAYER, x, y);
 		lives = 4;
 		Image image = new Image(
 				"/com/wordpress/marleneknoche/model/hannes_right.png");
-		imageView.setImage(image);
-		imageView.setX(x);
-		imageView.setY(y);
+		getImageView().setImage(image);
+		getImageView().setX(x);
+		getImageView().setY(y);
 	}
 
 	public int getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(final int score) {
 		this.score = score;
+	}
+
+	@Override
+	public void setAlive(final boolean alive) {
+		super.setAlive(alive);
+		System.out.println("Oh no, I'm Dead");
 	}
 
 	public int getLives() {
 		return lives;
 	}
 
-	public void setLives(int lives) {
+	public void setLives(final int lives) {
 		this.lives = lives;
-		if (lives > maxLives) {
-			this.lives = maxLives;
+		if (lives > MAX_LIVES) {
+			this.lives = MAX_LIVES;
 		}
 	}
 
 	public int getMaxLives() {
-		return maxLives;
+		return MAX_LIVES;
 	}
 
 	@Override
-	public void onCollision() {
+	public void onCollisionWithMaze() {
 		// Der Player macht nichts bei einer kollision.
+	}
+
+	@Override
+	public void bulletHasHitATarget(final Figure target) {
+		System.out.println("Hit");
+		super.bulletHasHitATarget(target);
+		target.setAlive(false);
+
+		int points = target.getType().getPoints();
+		score += points;
+		System.out.println("new Score:" + score);
 	}
 
 }
