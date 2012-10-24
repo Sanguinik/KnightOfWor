@@ -12,17 +12,21 @@ public abstract class Figure {
 
 	private boolean alive = true;
 	private final Maze maze;
-	protected double distance = 3;
-	protected final Group group;
-	protected final Rectangle rectangle;
-	protected final ImageView imageView;
+	private double distance = 3;
+	private final Group group;
+	private final Rectangle rectangle;
+	private final ImageView imageView;
 
-	private final CollisionDetector cd = new CollisionDetector();
+	protected final CollisionDetector cd = new CollisionDetector();
 
 	private Direction direction = Direction.RIGHT;
 
-	public Figure(Maze maze, double x, double y) {
+	private final TypeOfFigure type;
+
+	public Figure(final Maze maze, final TypeOfFigure type, final double x,
+			final double y) {
 		this.maze = maze;
+		this.type = type;
 		rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
 		imageView = new ImageView();
 		group = new Group();
@@ -30,11 +34,19 @@ public abstract class Figure {
 		group.getChildren().add(imageView);
 	}
 
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(final double distance) {
+		this.distance = distance;
+	}
+
 	public boolean isAlive() {
 		return alive;
 	}
 
-	public void setAlive(boolean alive) {
+	public void setAlive(final boolean alive) {
 		this.alive = alive;
 	}
 
@@ -42,7 +54,7 @@ public abstract class Figure {
 		return rectangle;
 	}
 
-	public void setDirection(Direction direction) {
+	public void setDirection(final Direction direction) {
 		this.direction = direction;
 	}
 
@@ -52,12 +64,12 @@ public abstract class Figure {
 
 	public void move() {
 
-		if (willCollideInFuture()) {
-			onCollision();
+		if (willCollideWithMazeInFuture()) {
+			onCollisionWithMaze();
 		} else {
 
-			double x = rectangle.getX();
-			double y = rectangle.getY();
+			double x = getRectangle().getX();
+			double y = getRectangle().getY();
 
 			switch (direction) {
 			case UP:
@@ -85,19 +97,25 @@ public abstract class Figure {
 
 	}
 
-	public abstract void onCollision();
+	public abstract void onCollisionWithMaze();
 
-	private void setY(double y) {
-		rectangle.setY(y);
-		imageView.setY(y);
+	private void setY(final double y) {
+		getRectangle().setY(y);
+		getImageView().setY(y);
 	}
 
-	private void setX(double x) {
-		rectangle.setX(x);
-		imageView.setX(x);
+	private void setX(final double x) {
+		getRectangle().setX(x);
+		getImageView().setX(x);
 	}
 
-	public boolean willCollideInFuture() {
+	public boolean willCollideWithMazeInFuture() {
+		final Rectangle futurePosition = getFuturePosition();
+
+		return cd.isCollide(maze.getWalls(), futurePosition);
+	}
+
+	protected Rectangle getFuturePosition() {
 		double moveX = 0.0;
 		double moveY = 0.0;
 
@@ -119,17 +137,28 @@ public abstract class Figure {
 			break;
 		}
 
-		double futureX = rectangle.getX() + moveX;
-		double futureY = rectangle.getY() + moveY;
+		final double futureX = getRectangle().getX() + moveX;
+		final double futureY = getRectangle().getY() + moveY;
 
-		Rectangle futurePosition = new Rectangle(futureX, futureY, WIDTH,
+		final Rectangle futurePosition = new Rectangle(futureX, futureY, WIDTH,
 				HEIGHT);
+		return futurePosition;
+	}
 
-		return cd.isCollide(maze.getWalls(), futurePosition);
+	public Maze getMaze() {
+		return maze;
 	}
 
 	public Group getGroup() {
 		return group;
+	}
+
+	public ImageView getImageView() {
+		return imageView;
+	}
+
+	public TypeOfFigure getType() {
+		return type;
 	}
 
 }

@@ -16,12 +16,12 @@ public interface Highscore {
 	 * @param score
 	 *            The score of the player.
 	 */
-	public void saveHighscore(String name, int score);
+	void saveHighscore(String name, int score);
 
 	/**
 	 * This method should load the actual highscore.
 	 * 
 	 * @return a String with the current highscore.
 	 */
-	public String loadHighscore();
+	String loadHighscore();
 }
