@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+import java.net.URL;
+
+import javafx.scene.media.AudioClip;
+
+import com.wordpress.marleneknoche.util.Callback;
 
 public abstract class ShootingFigure extends Figure {
 
 	private boolean hasBullet;
+	private AudioClip sound;
 
 	private ShootCallback shootCallback;
 
@@ -19,6 +25,11 @@ public abstract class ShootingFigure extends Figure {
 	}
 
 	public void shoot() {
+		URL resource = getClass().getResource("fire.mp3");
+		if (resource != null) {
+			sound = new AudioClip(resource.toString());
+		}
+
 		if (!hasBullet) {
 			hasBullet = true;
 			// schieße
@@ -34,6 +45,10 @@ public abstract class ShootingFigure extends Figure {
 			if (shootCallback != null) {
 				shootCallback.shootBullet(bullet);
 			}
+			if (!sound.isPlaying()) {
+				sound.play();
+			}
+
 		}
 	}
 

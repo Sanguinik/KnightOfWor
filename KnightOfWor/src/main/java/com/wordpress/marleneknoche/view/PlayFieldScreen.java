@@ -1,5 +1,6 @@
 package com.wordpress.marleneknoche.view;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -46,6 +49,10 @@ public class PlayFieldScreen extends Application {
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
 	private final Group root = new Group();
+
+	private Media music;
+	private MediaPlayer mediaPlayer;
+
 	/**
 	 * Mit dieser Wahrschnlichkeit wird ein mal pro Sekunde geschossen.
 	 */
@@ -72,6 +79,16 @@ public class PlayFieldScreen extends Application {
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
+		URL pathToLevelMusic = getClass().getResource("KoWL.mp3");
+		if (pathToLevelMusic != null) {
+			music = new Media(pathToLevelMusic.toString());
+			mediaPlayer = new MediaPlayer(music);
+
+			mediaPlayer.setVolume(0.5);
+			mediaPlayer.play();
+		} else {
+			System.err.println("Musikdatei 'KoWL.pm3' nicht gefunden!");
+		}
 		maze = new Maze();
 		player = new Player(maze, 130, 510);
 		player.setShootCallback(new ShootCallbackImpl());
@@ -114,6 +131,7 @@ public class PlayFieldScreen extends Application {
 		timeline.getKeyFrames().add(keyframe);
 		timeline.play();
 
+
 		Scene scene = new Scene(root, 1024, 740);
 		scene.setOnKeyPressed(keyboard);
 
@@ -125,6 +143,10 @@ public class PlayFieldScreen extends Application {
 			@Override
 			public void handle(final WindowEvent w) {
 				timeline.stop();
+
+				if (mediaPlayer != null) {
+					mediaPlayer.stop();
+				}
 				System.exit(0);
 			}
 		});
