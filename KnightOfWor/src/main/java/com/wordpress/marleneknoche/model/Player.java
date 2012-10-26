@@ -10,12 +10,12 @@ public class Player extends ShootingFigure {
 
 	public Player(final Maze maze, final double x, final double y) {
 		super(maze, TypeOfFigure.PLAYER, x, y);
-		lives = 4;
 		Image image = new Image(
 				"/com/wordpress/marleneknoche/model/hannes_right.png");
 		getImageView().setImage(image);
 		getImageView().setX(x);
 		getImageView().setY(y);
+		lives = 4;
 	}
 
 	public int getScore() {

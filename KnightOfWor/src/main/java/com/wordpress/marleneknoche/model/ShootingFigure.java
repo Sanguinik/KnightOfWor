@@ -1,14 +1,10 @@
 package com.wordpress.marleneknoche.model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.paint.Color;
-import java.net.URL;
-
 import javafx.scene.media.AudioClip;
-
-import com.wordpress.marleneknoche.util.Callback;
 
 public abstract class ShootingFigure extends Figure {
 
@@ -37,8 +33,7 @@ public abstract class ShootingFigure extends Figure {
 			double x = getRectangle().getX();
 			double y = getRectangle().getY();
 
-			Bullet bullet = new Bullet(getMaze(), Color.ANTIQUEWHITE,
-					getDirection(), x, y, this);
+			Bullet bullet = new Bullet(getMaze(), getDirection(), x, y, this);
 
 			bullet.setTargets(targets);
 

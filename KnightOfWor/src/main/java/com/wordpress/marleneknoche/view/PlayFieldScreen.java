@@ -33,7 +33,7 @@ public class PlayFieldScreen extends Application {
 		@Override
 		public void shootBullet(final Bullet bullet) {
 			bulletList.add(bullet);
-			root.getChildren().add(bullet.getRectangle());
+			root.getChildren().add(bullet.getGroup());
 		}
 	}
 
@@ -161,7 +161,7 @@ public class PlayFieldScreen extends Application {
 		}
 		for (Bullet b : bulletsToDelete) {
 			bulletList.remove(b);
-			root.getChildren().remove(b.getRectangle());
+			root.getChildren().remove(b.getGroup());
 		}
 	}
 

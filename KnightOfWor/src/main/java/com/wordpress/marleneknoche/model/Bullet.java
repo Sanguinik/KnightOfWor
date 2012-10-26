@@ -3,7 +3,7 @@ package com.wordpress.marleneknoche.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
 public class Bullet extends Figure {
@@ -14,14 +14,23 @@ public class Bullet extends Figure {
 
 	private final ShootingFigure shooter;
 
-	public Bullet(final Maze maze, final Color color,
-			final Direction direction, final double x, final double y,
-			final ShootingFigure shooter) {
+	public Bullet(final Maze maze, final Direction direction, final double x,
+			final double y, final ShootingFigure shooter) {
 		super(maze, TypeOfFigure.BULLET, x, y);
 		setDirection(direction);
 		setDistance(6);
-		getRectangle().setFill(color);
 		this.shooter = shooter;
+		Image playerBullet = new Image(
+				"/com/wordpress/marleneknoche/model/note.png");
+		Image enemyBullet = new Image(
+				"/com/wordpress/marleneknoche/model/note_gegner.png");
+		if (shooter.getType() == TypeOfFigure.PLAYER) {
+			getImageView().setImage(playerBullet);
+		} else {
+			getImageView().setImage(enemyBullet);
+		}
+		getImageView().setX(x);
+		getImageView().setY(y);
 	}
 
 	public void setTargets(final List<Figure> newTargets) {
