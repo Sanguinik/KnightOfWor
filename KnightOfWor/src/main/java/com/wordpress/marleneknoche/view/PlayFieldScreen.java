@@ -12,28 +12,22 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import com.wordpress.marleneknoche.model.Bullet;
-import com.wordpress.marleneknoche.model.Direction;
 import com.wordpress.marleneknoche.model.Enemy;
 import com.wordpress.marleneknoche.model.Keyboard;
 import com.wordpress.marleneknoche.model.Maze;
 import com.wordpress.marleneknoche.model.Player;
 import com.wordpress.marleneknoche.model.ShootCallback;
-import com.wordpress.marleneknoche.model.ShootingFigure;
 import com.wordpress.marleneknoche.model.TypeOfFigure;
-import com.wordpress.marleneknoche.util.Callback;
 
 public class PlayFieldScreen extends Application {
-
 
 	private class ShootCallbackImpl implements ShootCallback {
 		@Override
@@ -79,7 +73,7 @@ public class PlayFieldScreen extends Application {
 		primaryStage.setTitle("Knight of Wor");
 		primaryStage.setResizable(false);
 
-		URL pathToLevelMusic = getClass().getResource("KoWL.mp3");
+		URL pathToLevelMusic = getClass().getResource("KoWLong.mp3");
 		if (pathToLevelMusic != null) {
 			music = new Media(pathToLevelMusic.toString());
 			mediaPlayer = new MediaPlayer(music);
@@ -87,12 +81,11 @@ public class PlayFieldScreen extends Application {
 			mediaPlayer.setVolume(0.5);
 			mediaPlayer.play();
 		} else {
-			System.err.println("Musikdatei 'KoWL.pm3' nicht gefunden!");
+			System.err.println("Musikdatei 'KoWLong.pm3' nicht gefunden!");
 		}
 		maze = new Maze();
 		player = new Player(maze, 130, 510);
 		player.setShootCallback(new ShootCallbackImpl());
-
 
 		final Enemy enemy1 = createEnemy(TypeOfFigure.BURWOR, 130, 130);
 		final Enemy enemy2 = createEnemy(TypeOfFigure.GARWOR, 855, 510);
@@ -130,7 +123,6 @@ public class PlayFieldScreen extends Application {
 				actionPerFrame);
 		timeline.getKeyFrames().add(keyframe);
 		timeline.play();
-
 
 		Scene scene = new Scene(root, 1024, 740);
 		scene.setOnKeyPressed(keyboard);
@@ -203,6 +195,9 @@ public class PlayFieldScreen extends Application {
 	private void gameOver() {
 		final GameOver gameOver = new GameOver();
 		gameOver.start(primaryStage);
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+		}
 		timeline.stop();
 	}
 }

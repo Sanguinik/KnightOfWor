@@ -73,6 +73,9 @@ public class TitleScreen extends Application {
 
 			@Override
 			public void handle(final ActionEvent arg0) {
+				if (player != null) {
+					player.stop();
+				}
 				Options optionsGUI = new Options();
 				optionsGUI.start(primaryStage);
 			}
@@ -87,6 +90,9 @@ public class TitleScreen extends Application {
 
 			@Override
 			public void handle(final ActionEvent arg0) {
+				if (player != null) {
+					player.stop();
+				}
 				HighscoreScreen highscoreScreen = new HighscoreScreen();
 				highscoreScreen.start(primaryStage);
 			}
@@ -101,6 +107,9 @@ public class TitleScreen extends Application {
 		about.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
+				if (player != null) {
+					player.stop();
+				}
 				Credits credits = new Credits();
 				credits.start(primaryStage);
 			}
@@ -114,6 +123,9 @@ public class TitleScreen extends Application {
 		close.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
+				if (player != null) {
+					player.stop();
+				}
 				System.exit(0);
 			}
 		});
