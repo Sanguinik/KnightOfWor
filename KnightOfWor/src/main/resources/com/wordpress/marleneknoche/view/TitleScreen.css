@@ -1,5 +1,3 @@
-@CHARSET "UTF-8";
-
 .root{
 	-fx-background-image: url("Start.png");
 }
@@ -8,7 +6,7 @@
 	-fx-text-fill: white;
 	-fx-font-family: "Monospace";
 	-fx-font-weight: bold;
-	-fx-background-color: linear-gradient(black,blue );
+	-fx-background-color: linear-gradient(black,blue);
 }
 
 .button:hover{

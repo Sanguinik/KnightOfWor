@@ -16,7 +16,7 @@ public class Options extends Application {
 		primaryStage.setResizable(false);
 
 		Button okBtn = new Button();
-		okBtn.setText("ZurÃ¼ck");
+		okBtn.setText("Zurück");
 		okBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

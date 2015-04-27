@@ -38,11 +38,11 @@ public class Credits extends Application {
 		grid.add(marlene, 0, 4);
 
 		Label reason = new Label(
-				" Dieses Spiel wurde fÃ¼r Johannes \n zum Geburtstag programmiert! \n In diesem Sinne:\n Alles Gute! :-)");
+				" Dieses Spiel wurde für Johannes \n zum Geburtstag programmiert! \n In diesem Sinne:\n Alles Gute! :-)");
 		grid.add(reason, 0, 5);
 
 		Button okBtn = new Button();
-		okBtn.setText("ZurÃ¼ck");
+		okBtn.setText("Zurück");
 		okBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
