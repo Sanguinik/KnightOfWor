@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 public class Bullet extends Figure {
 
 	private final List<Figure> targets = new ArrayList<Figure>();
+	private final static String PATH = "/de/sanguinik/model/";
 
 	private boolean active = true;
 
@@ -21,9 +22,9 @@ public class Bullet extends Figure {
 		setDistance(6);
 		this.shooter = shooter;
 		Image playerBullet = new Image(
-				"/de/sanguinik/model/note.png");
+				PATH + "note.png");
 		Image enemyBullet = new Image(
-				"/de/sanguinik/model/note_gegner.png");
+				PATH + "note_gegner.png");
 		if (shooter.getType() == TypeOfFigure.PLAYER) {
 			getImageView().setImage(playerBullet);
 		} else {

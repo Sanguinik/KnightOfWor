@@ -8,14 +8,15 @@ import javafx.scene.input.KeyEvent;
 public class Keyboard implements EventHandler<KeyEvent> {
 
 	private final Player player;
+	private static final String PATH = "/de/sanguinik/model/";
 	private static final Image IMAGE_UP = new Image(
-			"/de/sanguinik/model/hannes_up.png");
+			PATH + "hannes_up.png");
 	private static final Image IMAGE_DOWN = new Image(
-			"/de/sanguinik/model/hannes_down.png");
+			PATH + "hannes_down.png");
 	private static final Image IMAGE_LEFT = new Image(
-			"/de/sanguinik/model/hannes_left.png");
+			PATH + "hannes_left.png");
 	private static final Image IMAGE_RIGHT = new Image(
-			"/de/sanguinik/model/hannes_right.png");
+			PATH +"hannes_right.png");
 
 	public Keyboard(Player player) {
 		this.player = player;

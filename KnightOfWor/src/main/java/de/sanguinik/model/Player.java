@@ -7,11 +7,12 @@ public class Player extends ShootingFigure {
 	private int score = 0;
 	private int lives = 4;
 	private static final int MAX_LIVES = 4;
+	private static final String PATH = "/de/sanguinik/model/";
 
 	public Player(final Maze maze, final double x, final double y) {
 		super(maze, TypeOfFigure.PLAYER, x, y);
 		Image image = new Image(
-				"/de/sanguinik/model/hannes_right.png");
+				PATH + "hannes_right.png");
 		getImageView().setImage(image);
 		getImageView().setX(x);
 		getImageView().setY(y);
