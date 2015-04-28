@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.scene.control.Label;
 import de.sanguinik.model.Bullet;
 import de.sanguinik.model.Enemy;
 import de.sanguinik.model.Keyboard;
@@ -92,6 +93,9 @@ public class PlayFieldScreen extends Application {
 
 		player.addTargets(enemy1, enemy2, enemy3);
 
+		Label score = new Label("Score: " + player.getScore());
+		score.setTextFill(Color.WHITESMOKE);
+		
 		Keyboard keyboard = new Keyboard(player);
 
 		root.getChildren().add(player.getGroup());
@@ -99,6 +103,7 @@ public class PlayFieldScreen extends Application {
 		root.getChildren().add(enemy2.getGroup());
 		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
+		root.getChildren().add(score);
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.setAutoReverse(false);
@@ -113,6 +118,8 @@ public class PlayFieldScreen extends Application {
 				moveAllEnemies();
 
 				moveAllBullets();
+				
+				score.setText("Score: " + player.getScore());
 
 			}
 
