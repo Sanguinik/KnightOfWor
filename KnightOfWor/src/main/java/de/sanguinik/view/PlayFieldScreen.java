@@ -15,10 +15,16 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 import de.sanguinik.model.Bullet;
 import de.sanguinik.model.Enemy;
 import de.sanguinik.model.Keyboard;
@@ -153,8 +159,43 @@ public class PlayFieldScreen extends Application {
 
 	private void checkThatPlayerIsStillAlive() {
 		if (!player.isAlive()) {
-			gameOver();
+
+			enterHighscore();
+//			gameOver();
 		}
+	}
+	
+	private void enterHighscore(){
+		timeline.stop();
+		int finalScore = player.getScore();
+		String playerName = "Spieler 1";
+		Label playersPoints = new Label("Du hast "+finalScore+ " Punkte!");
+		playersPoints.setTextFill(Color.WHITESMOKE);
+		Label enterHighscore = new Label("Trage deinen Namen ein! ");
+		enterHighscore.setTextFill(Color.WHITESMOKE);
+		TextField name = new TextField(playerName);
+		Button ok = new Button("Ok");
+		VBox highscorePopup = new VBox();
+		highscorePopup.setAlignment(Pos.CENTER);
+		highscorePopup.getChildren().add(playersPoints);
+		highscorePopup.getChildren().add(enterHighscore);
+		HBox highscoreBox = new HBox();
+		highscoreBox.getChildren().add(name);
+		highscoreBox.getChildren().add(ok);
+		highscorePopup.getChildren().add(highscoreBox);
+		highscorePopup.setLayoutX(root.getScene().getWidth()/2 - 120);
+		highscorePopup.setLayoutY(root.getScene().getHeight() - 100);
+		root.getChildren().add(highscorePopup);
+		
+		ok.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				gameOver();
+			}
+		});
+		
+		
 	}
 
 	private void moveAllBullets() {
@@ -175,7 +216,8 @@ public class PlayFieldScreen extends Application {
 		List<Enemy> enemiesToDelete = new ArrayList<Enemy>();
 
 		if (enemyList.isEmpty()) {
-			gameOver();
+//			gameOver();
+			enterHighscore();
 		}
 
 		for (Enemy e : enemyList) {
@@ -204,6 +246,6 @@ public class PlayFieldScreen extends Application {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 		}
-		timeline.stop();
+//		timeline.stop();
 	}
 }
