@@ -54,7 +54,7 @@ public class PlayFieldScreen extends Application {
 	private MediaPlayer mediaPlayer;
 
 	/**
-	 * Mit dieser Wahrschnlichkeit wird ein mal pro Sekunde geschossen.
+	 * Mit dieser Wahrscheinlichkeit wird ein mal pro Sekunde geschossen.
 	 */
 	private static final double SHOOT_LIKELIHOOD = 0.7;
 	private Maze maze;
@@ -161,7 +161,6 @@ public class PlayFieldScreen extends Application {
 		if (!player.isAlive()) {
 
 			enterHighscore();
-//			gameOver();
 		}
 	}
 	
@@ -216,7 +215,6 @@ public class PlayFieldScreen extends Application {
 		List<Enemy> enemiesToDelete = new ArrayList<Enemy>();
 
 		if (enemyList.isEmpty()) {
-//			gameOver();
 			enterHighscore();
 		}
 
@@ -246,6 +244,5 @@ public class PlayFieldScreen extends Application {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 		}
-//		timeline.stop();
 	}
 }
