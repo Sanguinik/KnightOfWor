@@ -165,6 +165,9 @@ public class PlayFieldScreen extends Application {
 	}
 	
 	private void enterHighscore(){
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+		}
 		timeline.stop();
 		int finalScore = player.getScore();
 		String playerName = "Spieler 1";
