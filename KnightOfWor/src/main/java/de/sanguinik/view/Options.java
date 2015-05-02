@@ -30,6 +30,8 @@ public class Options extends Application {
 		StackPane root = new StackPane();
 		root.getChildren().add(okBtn);
 		Scene scene = new Scene(root, 1024, 740);
+		scene.getStylesheets().add(
+				Credits.class.getResource("Options.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
