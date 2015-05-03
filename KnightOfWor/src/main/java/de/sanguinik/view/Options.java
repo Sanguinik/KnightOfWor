@@ -3,8 +3,11 @@ package de.sanguinik.view;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -15,6 +18,25 @@ public class Options extends Application {
 		primaryStage.setTitle("Knight of Wor - Optionen");
 		primaryStage.setResizable(false);
 
+		GridPane root = new GridPane();
+		root.setAlignment(Pos.CENTER);
+		root.setHgap(30);
+		root.setVgap(30);
+		
+		Label optionHeader = new Label("OPTIONEN");
+		root.add(optionHeader,0,0);
+		
+		Label controls = new Label("Steuerung");
+		root.add(controls,0,1);
+		
+		Label configuration = new Label("Hoch \t W \n"
+				+ "Runter \t S \n"
+				+ "Links \t A \n"
+				+ "Rechts \t D \n"
+				+ "Schießen  Leertaste \n"
+				+ "Pause \t P");
+		root.add(configuration,0,3);
+		
 		Button okBtn = new Button();
 		okBtn.setText("Zurück");
 		okBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -27,8 +49,7 @@ public class Options extends Application {
 
 		});
 
-		StackPane root = new StackPane();
-		root.getChildren().add(okBtn);
+		root.add(okBtn,0,4);
 		Scene scene = new Scene(root, 1024, 740);
 		scene.getStylesheets().add(
 				Credits.class.getResource("Options.css").toExternalForm());
