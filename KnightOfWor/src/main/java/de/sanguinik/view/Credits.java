@@ -18,6 +18,7 @@ public class Credits extends Application {
 		primaryStage.setResizable(false);
 
 		GridPane grid = new GridPane();
+		grid.setId("creditsGrid");
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(30);
 		grid.setVgap(30);

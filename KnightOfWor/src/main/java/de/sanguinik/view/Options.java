@@ -19,6 +19,7 @@ public class Options extends Application {
 		primaryStage.setResizable(false);
 
 		GridPane root = new GridPane();
+		root.setId("optionsGrid");
 		root.setAlignment(Pos.CENTER);
 		root.setHgap(30);
 		root.setVgap(30);

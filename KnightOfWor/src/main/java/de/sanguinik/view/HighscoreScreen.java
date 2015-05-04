@@ -24,6 +24,7 @@ public class HighscoreScreen extends Application {
 		primaryStage.setResizable(false);
 
 		GridPane grid = new GridPane();
+		grid.setId("highscoreGrid");
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(30);
 		grid.setVgap(30);

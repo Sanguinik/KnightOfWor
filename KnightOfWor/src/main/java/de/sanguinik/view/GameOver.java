@@ -29,6 +29,7 @@ public class GameOver extends Application {
 		});
 
 		StackPane root = new StackPane();
+		root.setId("gameOverPane");
 		root.getChildren().add(button);
 		Scene scene = new Scene(root, 1024, 740);
 		scene.getStylesheets().add(

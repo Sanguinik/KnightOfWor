@@ -42,6 +42,7 @@ public class TitleScreen extends Application {
 			System.err.println("Musikdatei 'KoW.mp3' wurde nicht gefunden!");
 		}
 		GridPane grid = new GridPane();
+		grid.setId("titleGrid");
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(30);
 		grid.setVgap(30);
