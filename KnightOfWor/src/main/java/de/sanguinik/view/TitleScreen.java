@@ -132,6 +132,7 @@ public class TitleScreen extends Application {
 		});
 
 		Scene scene = new Scene(grid, 1024, 740);
+		scene.getStylesheets().add(TitleScreen.class.getResource("controls.css").toExternalForm());
 		scene.getStylesheets().add(
 				TitleScreen.class.getResource("TitleScreen.css")
 						.toExternalForm());

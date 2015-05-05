@@ -30,10 +30,12 @@ public class HighscoreScreen extends Application {
 		grid.setVgap(30);
 		
 		final Label highscoreTitle = new Label("Highscore");
-		highscoreTitle.setFont(new Font("Monospace", 48));
-		highscoreTitle.setTextFill(Color.WHITE);
+//		highscoreTitle.setFont(new Font("Monospace", 48));
+//		highscoreTitle.setTextFill(Color.WHITE);
 		
 		TableView highscoreTable = new TableView();
+		
+		highscoreTable.setId("highscoreTable");
 		
 		TableColumn nameCol = new TableColumn("Name");
 		nameCol.setMinWidth(150);
@@ -63,6 +65,7 @@ public class HighscoreScreen extends Application {
 		StackPane root = new StackPane();
 		root.getChildren().add(grid);
 		Scene scene = new Scene(root, 1024, 740);
+		scene.getStylesheets().add(TitleScreen.class.getResource("controls.css").toExternalForm());
 		scene.getStylesheets().add(
 				Credits.class.getResource("HighscoreScreen.css").toExternalForm());
 		primaryStage.setScene(scene);

@@ -57,6 +57,7 @@ public class Credits extends Application {
 		grid.add(okBtn, 0, 6);
 
 		Scene scene = new Scene(grid, 1024, 740);
+		scene.getStylesheets().add(TitleScreen.class.getResource("controls.css").toExternalForm());
 		scene.getStylesheets().add(
 				Credits.class.getResource("Credits.css").toExternalForm());
 		primaryStage.setScene(scene);

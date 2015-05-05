@@ -1,0 +1,24 @@
+.button{
+	-fx-text-fill: white;
+	-fx-font-family: "Monospace";
+	-fx-font-weight: bold;
+	-fx-background-color: linear-gradient(black,blue );
+}
+
+.button:hover{
+	-fx-background-color: linear-gradient(grey,lightblue);
+}
+
+.label{
+	-fx-text-fill:black;
+	-fx-font-weight: bold;
+	-fx-font-size: 16;
+	-fx-border-color: black;
+	-fx-background-color: white;
+	-fx-border-radius: 5;
+	-fx-background-radius: 5;
+}
+
+.label:hover{
+	-fx-text-fill:black;
+}
