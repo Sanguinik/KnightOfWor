@@ -100,7 +100,9 @@ public class PlayFieldScreen extends Application {
 		player.addTargets(enemy1, enemy2, enemy3);
 
 		Label score = new Label("Score: " + player.getScore());
-		score.setTextFill(Color.WHITESMOKE);
+		
+		Label lives = new Label("Leben: " + player.getLives());
+		lives.setLayoutY(40);
 		
 		Keyboard keyboard = new Keyboard(player);
 
@@ -110,6 +112,7 @@ public class PlayFieldScreen extends Application {
 		root.getChildren().add(enemy3.getGroup());
 		root.getChildren().addAll(maze.getWalls());
 		root.getChildren().add(score);
+		root.getChildren().add(lives);
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.setAutoReverse(false);
@@ -119,13 +122,27 @@ public class PlayFieldScreen extends Application {
 			@Override
 			public void handle(final ActionEvent t) {
 
-				checkThatPlayerIsStillAlive();
+				if(checkThatPlayerIsStillAlive()){
 
-				moveAllEnemies();
+					moveAllEnemies();
 
-				moveAllBullets();
-				
-				score.setText("Score: " + player.getScore());
+					moveAllBullets();
+					
+					score.setText("Score: " + player.getScore());
+					
+				}else{
+					
+					if(player.getLives() == 0){
+
+						enterHighscore();
+						
+					}else{
+						player.setLives(player.getLives() - 1);
+						lives.setText("Leben: " + player.getLives());
+						player.setAlive(true);
+					}
+					
+				}
 
 			}
 
@@ -158,11 +175,12 @@ public class PlayFieldScreen extends Application {
 
 	}
 
-	private void checkThatPlayerIsStillAlive() {
+	private boolean checkThatPlayerIsStillAlive() {
 		if (!player.isAlive()) {
-
-			enterHighscore();
+			
+			return false;
 		}
+		return true;
 	}
 	
 	private void enterHighscore(){
