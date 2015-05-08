@@ -30,7 +30,6 @@ public class Player extends ShootingFigure {
 	@Override
 	public void setAlive(final boolean alive) {
 		super.setAlive(alive);
-		System.out.println("Oh no, I'm Dead");
 	}
 
 	public int getLives() {
@@ -48,20 +47,20 @@ public class Player extends ShootingFigure {
 		return MAX_LIVES;
 	}
 
+	/**
+	 * If the player collides with the maze, nothing happens.
+	 */
 	@Override
 	public void onCollisionWithMaze() {
-		// Der Player macht nichts bei einer kollision.
 	}
 
 	@Override
 	public void bulletHasHitATarget(final Figure target) {
-		System.out.println("Hit");
 		super.bulletHasHitATarget(target);
 		target.setAlive(false);
 
 		int points = target.getType().getPoints();
 		score += points;
-		System.out.println("new Score:" + score);
 	}
 
 }

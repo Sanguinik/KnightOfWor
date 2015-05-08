@@ -28,7 +28,6 @@ public abstract class ShootingFigure extends Figure {
 
 		if (!hasBullet) {
 			hasBullet = true;
-			// schieße
 
 			double x = getRectangle().getX();
 			double y = getRectangle().getY();
