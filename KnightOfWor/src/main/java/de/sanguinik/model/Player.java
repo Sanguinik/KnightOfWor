@@ -1,8 +1,5 @@
 package de.sanguinik.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.image.Image;
 
 public class Player extends ShootingFigure {
@@ -59,7 +56,6 @@ public class Player extends ShootingFigure {
 		Figure enemy = checkForCollisionWithEnemies();
 		
 		if(enemy == null){
-			System.out.println("Move like a Jagger");
 			super.move();
 		}else{
 		
@@ -72,7 +68,6 @@ public class Player extends ShootingFigure {
 		for(Figure enemy : getTargets()){
 			if(!(enemy.getType().equals(TypeOfFigure.BULLET)) && !(enemy.getType().equals(TypeOfFigure.PLAYER))){
 				if(cd.isCollide(enemy.getRectangle(), this.getRectangle())){
-					System.out.println("HIT");
 					return enemy;
 				}
 			}
