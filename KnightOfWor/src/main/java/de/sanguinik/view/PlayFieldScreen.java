@@ -43,6 +43,8 @@ public class PlayFieldScreen extends Application {
 		}
 	}
 
+	private final static int START_X_PLAYER_1 = 130;
+	private final static int START_Y_PLAYER_1 = 510;
 	private final Timeline timeline = new Timeline();
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
 	private final List<Bullet> bulletList = new ArrayList<Bullet>();
@@ -90,7 +92,7 @@ public class PlayFieldScreen extends Application {
 			System.err.println("Musikdatei 'KoWLong.pm3' nicht gefunden!");
 		}
 		maze = new Maze();
-		player = new Player(maze, 130, 510);
+		player = new Player(maze, START_X_PLAYER_1, START_Y_PLAYER_1);
 		player.setShootCallback(new ShootCallbackImpl());
 
 		final Enemy enemy1 = createEnemy(TypeOfFigure.BURWOR, 130, 130);
@@ -132,14 +134,21 @@ public class PlayFieldScreen extends Application {
 					
 				}else{
 					
+					
 					if(player.getLives() == 0){
 
 						enterHighscore();
 						
 					}else{
+						timeline.pause();
+						player.getRectangle().setX(START_X_PLAYER_1);
+						player.getRectangle().setY(START_Y_PLAYER_1);
+						player.getImageView().setX(START_X_PLAYER_1);
+						player.getImageView().setY(START_Y_PLAYER_1);
 						player.setLives(player.getLives() - 1);
 						lives.setText("Leben: " + player.getLives());
 						player.setAlive(true);
+						timeline.play();
 					}
 					
 				}
