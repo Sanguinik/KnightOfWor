@@ -4,27 +4,29 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import de.sanguinik.model.Bullet;
 import de.sanguinik.model.Enemy;
 import de.sanguinik.model.Keyboard;
@@ -51,6 +53,7 @@ public class PlayFieldScreen extends Application {
 	private static final int ONE_SECOND = 1000;
 	private static final int FPS = 30;
 	private final Group root = new Group();
+	private boolean gameWasPaused = true;
 
 	private Media music;
 	private MediaPlayer mediaPlayer;
@@ -119,11 +122,15 @@ public class PlayFieldScreen extends Application {
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.setAutoReverse(false);
 
+		
+		
 		EventHandler<ActionEvent> actionPerFrame = new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(final ActionEvent t) {
-
+				
+				introSequence();
+				
 				if(checkThatPlayerIsStillAlive()){
 
 					moveAllEnemies();
@@ -186,7 +193,7 @@ public class PlayFieldScreen extends Application {
 
 	private boolean checkThatPlayerIsStillAlive() {
 		if (!player.isAlive()) {
-			
+			gameWasPaused = true;
 			return false;
 		}
 		return true;
@@ -224,6 +231,48 @@ public class PlayFieldScreen extends Application {
 				gameOver();
 			}
 		});
+		
+		
+	}
+	
+	private void introSequence() {
+		Label ready = new Label("READY?");
+		
+		ready.setLayoutX(root.getScene().getWidth()/2);
+		ready.setLayoutY(root.getScene().getHeight()/2);
+		
+		if(gameWasPaused){
+			
+			timeline.pause();
+			root.getChildren().add(ready);
+			Timer timer = new Timer();
+			
+			timer.schedule(new TimerTask(){
+
+				@Override
+				public void run() {
+					Platform.runLater(() -> {
+						ready.setText("START!");
+					});
+					
+				}
+			}, 1000);
+			
+			timer.schedule(new TimerTask(){
+
+				@Override
+				public void run() {
+					Platform.runLater(() -> {
+						
+						timeline.play();
+						root.getChildren().remove(ready);
+					});
+				}
+				
+			}, 2000);
+				
+			gameWasPaused = false;
+		}
 		
 		
 	}
