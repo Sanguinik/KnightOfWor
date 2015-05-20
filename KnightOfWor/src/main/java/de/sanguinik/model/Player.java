@@ -8,6 +8,7 @@ public class Player extends ShootingFigure {
 	private int lives = 4;
 	private static final int MAX_LIVES = 4;
 	private static final String PATH = "/de/sanguinik/model/";
+	private boolean isAllowedToMove = false;
 	
 	public Player(final Maze maze, final double x, final double y) {
 		super(maze, TypeOfFigure.PLAYER, x, y);
@@ -47,6 +48,9 @@ public class Player extends ShootingFigure {
 		return MAX_LIVES;
 	}
 	
+	public boolean isMovable(){
+		return isAllowedToMove;
+	}
 
 	/**
 	 * We need to override the move method to check if the player hits an enemy.
@@ -55,13 +59,14 @@ public class Player extends ShootingFigure {
 	public void move(){
 		Figure enemy = checkForCollisionWithEnemies();
 		
-		if(enemy == null){
+		if(enemy == null && isAllowedToMove){
 			super.move();
 		}else{
 		
 			setAlive(false);
 		}
 	}
+	
 	
 	private Figure checkForCollisionWithEnemies(){
 		
@@ -91,6 +96,15 @@ public class Player extends ShootingFigure {
 
 		int points = target.getType().getPoints();
 		score += points;
+	}
+
+	public void toggleMoveable() {
+		if(isAllowedToMove){
+			isAllowedToMove = false;
+		}else{
+			isAllowedToMove = true;
+		}
+		
 	}
 
 }

@@ -109,7 +109,7 @@ public class PlayFieldScreen extends Application {
 		Label lives = new Label("Leben: " + player.getLives());
 		lives.setLayoutY(40);
 		
-		Keyboard keyboard = new Keyboard(player);
+		Keyboard keyboard = new Keyboard(player, this);
 
 		root.getChildren().add(player.getGroup());
 		root.getChildren().add(enemy1.getGroup());
@@ -194,6 +194,7 @@ public class PlayFieldScreen extends Application {
 	private boolean checkThatPlayerIsStillAlive() {
 		if (!player.isAlive()) {
 			gameWasPaused = true;
+			player.toggleMoveable();
 			return false;
 		}
 		return true;
@@ -265,6 +266,7 @@ public class PlayFieldScreen extends Application {
 					Platform.runLater(() -> {
 						
 						timeline.play();
+						player.toggleMoveable();
 						root.getChildren().remove(ready);
 					});
 				}
@@ -323,6 +325,17 @@ public class PlayFieldScreen extends Application {
 		gameOver.start(primaryStage);
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
+		}
+	}
+	
+	public void pauseGame(){
+		
+		if(gameWasPaused){
+			timeline.play();
+			gameWasPaused = false;
+		}else{
+			timeline.pause();
+			gameWasPaused = true;
 		}
 	}
 }

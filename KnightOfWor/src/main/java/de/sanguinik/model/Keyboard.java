@@ -1,5 +1,6 @@
 package de.sanguinik.model;
 
+import de.sanguinik.view.PlayFieldScreen;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -8,18 +9,17 @@ import javafx.scene.input.KeyEvent;
 public class Keyboard implements EventHandler<KeyEvent> {
 
 	private final Player player;
+	private final PlayFieldScreen screen;
 	private static final String PATH = "/de/sanguinik/model/";
-	private static final Image IMAGE_UP = new Image(
-			PATH + "hannes_up.png");
-	private static final Image IMAGE_DOWN = new Image(
-			PATH + "hannes_down.png");
-	private static final Image IMAGE_LEFT = new Image(
-			PATH + "hannes_left.png");
-	private static final Image IMAGE_RIGHT = new Image(
-			PATH +"hannes_right.png");
+	private static final Image IMAGE_UP = new Image(PATH + "hannes_up.png");
+	private static final Image IMAGE_DOWN = new Image(PATH + "hannes_down.png");
+	private static final Image IMAGE_LEFT = new Image(PATH + "hannes_left.png");
+	private static final Image IMAGE_RIGHT = new Image(PATH
+			+ "hannes_right.png");
 
-	public Keyboard(Player player) {
+	public Keyboard(Player player, PlayFieldScreen screen) {
 		this.player = player;
+		this.screen = screen;
 	}
 
 	@Override
@@ -29,29 +29,41 @@ public class Keyboard implements EventHandler<KeyEvent> {
 		switch (code) {
 
 		case W:
-			player.setDirection(Direction.UP);
-			player.move();
-			player.getImageView().setImage(IMAGE_UP);
+			if (player.isMovable()) {
+				player.setDirection(Direction.UP);
+				player.move();
+				player.getImageView().setImage(IMAGE_UP);
+			}
 			break;
 		case S:
-			player.setDirection(Direction.DOWN);
-			player.move();
-			player.getImageView().setImage(IMAGE_DOWN);
+			if (player.isMovable()) {
+				player.setDirection(Direction.DOWN);
+				player.move();
+				player.getImageView().setImage(IMAGE_DOWN);
+			}
 			break;
 		case A:
-			player.setDirection(Direction.LEFT);
-			player.move();
-			player.getImageView().setImage(IMAGE_LEFT);
+			if (player.isMovable()) {
+				player.setDirection(Direction.LEFT);
+				player.move();
+				player.getImageView().setImage(IMAGE_LEFT);
+			}
 			break;
 		case D:
-			player.setDirection(Direction.RIGHT);
-			player.move();
-			player.getImageView().setImage(IMAGE_RIGHT);
+			if (player.isMovable()) {
+				player.setDirection(Direction.RIGHT);
+				player.move();
+				player.getImageView().setImage(IMAGE_RIGHT);
+			}
 			break;
 		case SPACE:
-			player.shoot();
+			if (player.isMovable()) {
+				player.shoot();
+			}
 			break;
 		case P:
+			screen.pauseGame();
+			player.toggleMoveable();
 			break;
 		default:
 			break;
