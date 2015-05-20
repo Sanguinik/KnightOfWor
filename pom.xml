@@ -24,6 +24,7 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<encoding>Cp1252</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
