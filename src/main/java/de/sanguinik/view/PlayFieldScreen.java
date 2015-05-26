@@ -54,6 +54,7 @@ public class PlayFieldScreen extends Application {
 	private static final int FPS = 30;
 	private final Group root = new Group();
 	private boolean gameWasPaused = true;
+	private final Label pause = new Label("PAUSE");
 
 	private Media music;
 	private MediaPlayer mediaPlayer;
@@ -331,9 +332,13 @@ public class PlayFieldScreen extends Application {
 	public void pauseGame(){
 		
 		if(gameWasPaused){
+			root.getChildren().remove(pause);
 			timeline.play();
 			gameWasPaused = false;
 		}else{
+			pause.setLayoutX(root.getScene().getWidth()/2);
+			pause.setLayoutY(root.getScene().getHeight()/2);
+			root.getChildren().add(pause);
 			timeline.pause();
 			gameWasPaused = true;
 		}
