@@ -79,12 +79,16 @@ public class Player extends ShootingFigure {
 	
 	private Figure checkForCollisionWithEnemies(){
 		
+		if(!invincible){
+			
+		
 		for(Figure enemy : getTargets()){
 			if(!(enemy.getType().equals(TypeOfFigure.BULLET)) && !(enemy.getType().equals(TypeOfFigure.PLAYER))){
 				if(cd.isCollide(enemy.getRectangle(), this.getRectangle())){
 					return enemy;
 				}
 			}
+		}
 		}
 		
 		return null;

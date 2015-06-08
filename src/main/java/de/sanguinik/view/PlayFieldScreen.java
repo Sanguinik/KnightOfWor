@@ -155,8 +155,22 @@ public class PlayFieldScreen extends Application {
 						player.getImageView().setY(START_Y_PLAYER_1);
 						player.setLives(player.getLives() - 1);
 						lives.setText("Leben: " + player.getLives());
+						player.setInvincible(true);
 						player.setAlive(true);
 						timeline.play();
+						Timer timer = new Timer();
+						
+						timer.schedule(new TimerTask(){
+
+							@Override
+							public void run() {
+								Platform.runLater(() -> {
+									player.setInvincible(false);
+								});
+								
+							}
+						}, 3000);
+						
 					}
 					
 				}
