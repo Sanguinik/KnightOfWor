@@ -9,6 +9,7 @@ public class Player extends ShootingFigure {
 	private static final int MAX_LIVES = 4;
 	private static final String PATH = "/de/sanguinik/model/";
 	private boolean isAllowedToMove = false;
+	private boolean invincible = false;
 	
 	public Player(final Maze maze, final double x, final double y) {
 		super(maze, TypeOfFigure.PLAYER, x, y);
@@ -50,6 +51,14 @@ public class Player extends ShootingFigure {
 	
 	public boolean isMovable(){
 		return isAllowedToMove;
+	}
+	
+	public void setInvincible(boolean isInvincible){
+		invincible = isInvincible;
+	}
+	
+	public boolean isInvincible(){
+		return invincible;
 	}
 
 	/**
