@@ -7,11 +7,11 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Maze2{
+public abstract class EmptyMaze{
 
 	private final List<Rectangle> walls = new ArrayList<Rectangle>();
 
-	public Maze2() {
+	public EmptyMaze() {
 		createMaze();
 	}
 
@@ -33,6 +33,10 @@ public class Maze2{
 	
 	public List<Rectangle> getWalls() {
 		return walls;
+	}
+	
+	public void addWalls(List<Rectangle> walls){
+		this.walls.addAll(walls);
 	}
 	
 }

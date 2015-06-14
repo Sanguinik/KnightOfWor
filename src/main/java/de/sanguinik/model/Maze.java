@@ -14,22 +14,24 @@ import javafx.scene.shape.Rectangle;
  * @author marlene
  * 
  */
-public class Maze {
+public class Maze extends EmptyMaze{
 
-	private final List<Rectangle> walls = new ArrayList<Rectangle>();
+	private List<Rectangle> walls = new ArrayList<Rectangle>();
 
 	public Maze() {
 		createMaze();
+		walls = super.getWalls();
 	}
 
 	private void createMaze() {
-		Group g = new Group();
+//		Group g = new Group();
 
+		//walls.add(new Rectangle(x,y,l,h);
 		// outer walls
-		walls.add(new Rectangle(112, 70, 800, 10));
-		walls.add(new Rectangle(112, 563, 800, 10));
-		walls.add(new Rectangle(112, 70, 10, 493));
-		walls.add(new Rectangle(902, 70, 10, 493));
+//		walls.add(new Rectangle(112, 70, 800, 10));
+//		walls.add(new Rectangle(112, 563, 800, 10));
+//		walls.add(new Rectangle(112, 70, 10, 493));
+//		walls.add(new Rectangle(902, 70, 10, 493));
 		// inner walls first line - 72 | 83
 		walls.add(new Rectangle(400, 70, 10, 83));
 		walls.add(new Rectangle(616, 70, 10, 83));
@@ -69,8 +71,10 @@ public class Maze {
 
 		for (Rectangle r : walls) {
 			r.setFill(Color.BLUE);
+			
 		}
-		g.getChildren().addAll(walls);
+		super.getWalls().addAll(walls);
+//		g.getChildren().addAll(walls);
 	}
 
 	public List<Rectangle> getWalls() {
