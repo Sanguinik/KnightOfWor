@@ -357,4 +357,12 @@ public class PlayFieldScreen extends Application {
 			gameWasPaused = true;
 		}
 	}
+
+	public void muteMusic() {
+		if(mediaPlayer.isMute()){
+			mediaPlayer.setMute(false);
+		}else{
+			mediaPlayer.setMute(true);
+		}
+	}
 }

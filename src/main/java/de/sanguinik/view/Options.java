@@ -35,6 +35,7 @@ public class Options extends Application {
 				+ "Links \t A \n"
 				+ "Rechts \t D \n"
 				+ "Schieﬂen  Leertaste \n"
+				+ "Musik an/aus M \n"
 				+ "Pause \t P");
 		root.add(configuration,0,3);
 		

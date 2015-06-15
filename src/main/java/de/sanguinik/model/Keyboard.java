@@ -65,6 +65,8 @@ public class Keyboard implements EventHandler<KeyEvent> {
 			screen.pauseGame();
 			player.toggleMoveable();
 			break;
+		case M:
+			screen.muteMusic();
 		default:
 			break;
 
