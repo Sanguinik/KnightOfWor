@@ -1,6 +1,9 @@
 package de.sanguinik.view;
 
+import de.sanguinik.model.HighscoreEntry;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -9,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -33,17 +37,27 @@ public class HighscoreScreen extends Application {
 //		highscoreTitle.setFont(new Font("Monospace", 48));
 //		highscoreTitle.setTextFill(Color.WHITE);
 		
+		String dummyname = "Horst";
+		int dummypoints = 9000;
+		
+		final ObservableList<HighscoreEntry> dummyData = FXCollections.observableArrayList(
+				new HighscoreEntry(dummyname, dummypoints)
+				);
+		
 		TableView highscoreTable = new TableView();
 		
 		highscoreTable.setId("highscoreTable");
 		
 		TableColumn nameCol = new TableColumn("Name");
 		nameCol.setMinWidth(150);
+		nameCol.setCellValueFactory(new PropertyValueFactory<HighscoreEntry, String>("name"));
+
 		TableColumn scoreCol = new TableColumn("Punkte");
 		scoreCol.setMinWidth(150);
+		scoreCol.setCellValueFactory(new PropertyValueFactory<HighscoreEntry, Integer>("score"));
 		
+		highscoreTable.setItems(dummyData);
 		highscoreTable.getColumns().addAll(nameCol, scoreCol);
-		
 		
 		
 		Button okBtn = new Button();
