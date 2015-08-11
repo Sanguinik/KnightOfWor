@@ -39,9 +39,12 @@ public class HighscoreScreen extends Application {
 		
 		String dummyname = "Horst";
 		int dummypoints = 9000;
+		String dummyname2 = "Klaus";
+		int dummypoints2 = 8300;
 		
 		final ObservableList<HighscoreEntry> dummyData = FXCollections.observableArrayList(
-				new HighscoreEntry(dummyname, dummypoints)
+				new HighscoreEntry(dummyname, dummypoints),
+				new HighscoreEntry(dummyname2, dummypoints2)
 				);
 		
 		TableView highscoreTable = new TableView();
@@ -51,14 +54,17 @@ public class HighscoreScreen extends Application {
 		TableColumn nameCol = new TableColumn("Name");
 		nameCol.setMinWidth(150);
 		nameCol.setCellValueFactory(new PropertyValueFactory<HighscoreEntry, String>("name"));
+		nameCol.setSortable(false);
+		nameCol.setResizable(false);
 
 		TableColumn scoreCol = new TableColumn("Punkte");
 		scoreCol.setMinWidth(150);
 		scoreCol.setCellValueFactory(new PropertyValueFactory<HighscoreEntry, Integer>("score"));
+		scoreCol.setSortable(false);
+		scoreCol.setResizable(false);
 		
 		highscoreTable.setItems(dummyData);
 		highscoreTable.getColumns().addAll(nameCol, scoreCol);
-		
 		
 		Button okBtn = new Button();
 		okBtn.setText("Zurück");
