@@ -29,6 +29,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import de.sanguinik.model.Bullet;
 import de.sanguinik.model.Enemy;
+import de.sanguinik.model.HighscoreEntry;
 import de.sanguinik.model.Keyboard;
 import de.sanguinik.model.Maze;
 import de.sanguinik.model.Player;
@@ -55,6 +56,8 @@ public class PlayFieldScreen extends Application {
 	private final Group root = new Group();
 	private boolean gameWasPaused = true;
 	private final Label pause = new Label("PAUSE");
+	
+	private HighscoreEntry entry;
 
 	private Media music;
 	private MediaPlayer mediaPlayer;
@@ -244,6 +247,10 @@ public class PlayFieldScreen extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				//highscore eintragen
+				entry = new HighscoreEntry(name.getText(), finalScore);
+				
+				//gameover
 				gameOver();
 			}
 		});
