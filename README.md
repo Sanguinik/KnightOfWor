@@ -12,4 +12,4 @@ Just run `mvn clean install` in the root directory and you will find an executab
 
 ##License
 
-This project is licensed under the [GPLv3](/Sanguinik/KnightOfWor/LICENSE.md).
+This project is licensed under the [GPLv3](https://github.com/Sanguinik/KnightOfWor/blob/master/LICENSE.md).
