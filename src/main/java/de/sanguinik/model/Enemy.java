@@ -52,16 +52,34 @@ public class Enemy extends ShootingFigure {
 		}
 	}
 
-	/**
-	 * Enemy wechselt per zufall die Richtung wenn er kollidiert
-	 */
+
 	@Override
 	public void onCollisionWithMaze() {
+		changeToRandomDirection();
+	}
+
+	private void changeToRandomDirection() {
 		int random = new Random().nextInt(4);
 
 		Direction futureDirection = Direction.values()[random];
 
 		setDirection(futureDirection);
+	}
+	
+	@Override
+	public void move(){
+		if (willCollideWithMazeInFuture()) {
+			onCollisionWithMaze();
+		} else {
+			
+			int likelihood = (int) (30 * (1/0.7));
+			int random = new Random().nextInt(likelihood);
+			if(random == 0){
+				changeToRandomDirection();
+			}
+			super.move();
+		}
+
 	}
 
 	@Override
