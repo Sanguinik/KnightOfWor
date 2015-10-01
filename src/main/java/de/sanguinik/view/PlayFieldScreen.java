@@ -98,7 +98,7 @@ public class PlayFieldScreen extends Application {
 		} else {
 			System.err.println("Musikdatei 'KoWLong.pm3' nicht gefunden!");
 		}
-		maze = new Maze();
+		maze = new Maze("level1");
 		player = new Player(maze, START_X_PLAYER_1, START_Y_PLAYER_1);
 		player.setShootCallback(new ShootCallbackImpl());
 
