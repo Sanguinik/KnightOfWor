@@ -71,20 +71,16 @@ private void createMaze(String levelName) {
 				JSONObject block = (JSONObject) jsonObject.get("Block"+i);
 				
 				long x = (Long) block.get("x");
-				double dx = (double) x;
-				blockValues[i-1][0] = dx;
+				blockValues[i-1][0] = (double) x;
 
 				long y = (Long) block.get("y");
-				double dy = (double) y;
-				blockValues[i-1][1] = dy;
+				blockValues[i-1][1] = (double) y;
 				
 				long width = (Long) block.get("width");
-				double dwidth = (double) width;
-				blockValues[i-1][2] = dwidth;
+				blockValues[i-1][2] = (double) width;
 				
 				long height = (Long) block.get("height");
-				double dheight = (double) height;
-				blockValues[i-1][3] = dheight;
+				blockValues[i-1][3] = (double) height;
 
 			}
 			
