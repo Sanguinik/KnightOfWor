@@ -34,13 +34,13 @@ public class Options extends Application {
 				+ "Runter \t S \n"
 				+ "Links \t A \n"
 				+ "Rechts \t D \n"
-				+ "Schieﬂen  Leertaste \n"
+				+ "Schie√üen  Leertaste \n"
 				+ "Musik an/aus M \n"
 				+ "Pause \t P");
 		root.add(configuration,0,3);
 		
 		Button okBtn = new Button();
-		okBtn.setText("Zur¸ck");
+		okBtn.setText("Zur√ºck");
 		okBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

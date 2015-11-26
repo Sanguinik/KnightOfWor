@@ -17,7 +17,7 @@ public class GameOver extends Application {
 		primaryStage.setResizable(false);
 
 		Button button = new Button();
-		button.setText("Zurück");
+		button.setText("ZurÃ¼ck");
 		button.setAlignment(Pos.BOTTOM_CENTER);
 		button.setOnAction(new EventHandler<ActionEvent>() {
 

@@ -67,7 +67,7 @@ public class HighscoreScreen extends Application {
 		highscoreTable.getColumns().addAll(nameCol, scoreCol);
 		
 		Button okBtn = new Button();
-		okBtn.setText("Zurück");
+		okBtn.setText("ZurÃ¼ck");
 		okBtn.setAlignment(Pos.CENTER);
 		okBtn.setOnAction(new EventHandler<ActionEvent>() {
 
